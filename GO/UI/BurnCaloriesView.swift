@@ -9,19 +9,145 @@ import SwiftUI
 
 struct BurnCaloriesView: View {
     var body: some View {
-        HStack {
-            Image(systemName: "flame.fill")
-                .resizable()
-                .foregroundStyle(.red)
-                .frame(width: 17, height: 23)
-            Text("Burn Calories")
-                .appFont(.listTitleBold20)
+        GeometryReader { geometry in
+            VStack {
+                HStack {
+                    Image(systemName: "flame.fill")
+                        .resizable()
+                        .foregroundStyle(.red)
+                        .frame(width: 17, height: 23)
+                    Text("Burn Calories")
+                        .appFont(.listTitleBold20)
+                    
+                    Text("13 - 19 April 2025 ")
+                        .appFont(.tagSemiBold12)
+                        .foregroundStyle(.sub)
+                        .padding(.horizontal)
+                    Spacer()
+                    
+                }
+                .padding()
+                
+                
+                HStack {
+                    VStack(spacing: 20) {
+                        
+                        VStack {
+                            HStack {
+                                Text("Today")
+                                    .appFont(.subHeadLineMedium15)
+                                Spacer()
+                            }
+                            .padding(.leading, 20)
+                            HStack {
+                                Spacer()
+                                Text("872")
+                                    .appFont(.listTitleBold20)
+                                Text("kcal")
+                                    .appFont(.tagSemiBold12)
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        VStack {
+                            HStack {
+                                Text("Average")
+                                    .appFont(.subHeadLineMedium15)
+                                Spacer()
+                            }
+                            .padding(.leading, 20)
+                            HStack {
+                                Spacer()
+                                Text("653")
+                                    .appFont(.listTitleBold20)
+                                Text("kcal")
+                                    .appFont(.tagSemiBold12)
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        
+                    }
+                    .frame(width: geometry.size.width * 0.2)
+                    
+                    
+                    VStack {
+                        
+                        GeometryReader { geometry in
+                            let maxBarHeight = geometry.size.height
+                            HStack(alignment: .bottom) {
+                                Spacer()
+                                chartGraph(percent: 0.68,
+                                           text: "S",
+                                           maxBarHeight: maxBarHeight)
+                                
+                                Spacer()
+                                chartGraph(percent: 0.78,
+                                           text: "M",
+                                           maxBarHeight: maxBarHeight)
+                                
+                                Spacer()
+                                chartGraph(percent: 0.78,
+                                           text: "T",
+                                           maxBarHeight: maxBarHeight)
+                                
+                                Spacer()
+                                chartGraph(percent: 0.78,
+                                           text: "W",
+                                           maxBarHeight: maxBarHeight)
+                                
+                                Spacer()
+                                chartGraph(percent: 0.5,
+                                           text: "T",
+                                           maxBarHeight: maxBarHeight)
+                                
+                                Spacer()
+                                chartGraph(percent: 0.84,
+                                           text: "F",
+                                           isHighlighted: true,
+                                           maxBarHeight: maxBarHeight)
+                                
+                                Spacer()
+                                chartGraph(percent: 0,
+                                           text: "S",
+                                           maxBarHeight: maxBarHeight)
+                                Spacer()
+                            }
+                        }
+                        
+                    }
+                    .padding(.vertical)
+                    .padding(.trailing)
+                    
+                }
+                
+            }
             
-            Text("13 - 19 April 2025 ")
-                .appFont(.tagSemiBold12)
-                .foregroundStyle(.sub)
         }
+    }
+    
+    func chartGraph(percent: Float,
+                    text: String,
+                    isHighlighted: Bool = false,
+                    maxBarHeight: CGFloat) -> some View {
+        let barHeight = maxBarHeight * CGFloat(percent)
+        let barColor = isHighlighted ? Color.calories : Color.gray.opacity(0.3)
+        
+        return VStack(spacing: 4) {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(barColor)
+                .frame(width: 20, height: barHeight)
             
+            Circle()
+                .fill(barColor)
+                .frame(width: 16, height: 16)
+            
+            Text(text)
+                .appFont(.emphasisSemiBold16)
+                .foregroundColor(.primary)
+                .padding(.top, 2)
+            
+        }
     }
 }
 

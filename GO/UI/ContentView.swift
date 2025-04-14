@@ -54,19 +54,16 @@ struct ContentView: View {
                     .frame(width: 200)
                     
                     GeometryReader { geometry in
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.gray).opacity(0.5)
-                            .padding(.horizontal)
+                    
                         HStack {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.white)
+                            BurnCaloriesView()
                                 .padding()
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.white)
-                                .frame(width: 160,
-                                       height: 160)
-                                .padding()
+                                .background(.gray.opacity(0.2))
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .frame(width: geometry.size.width * 0.6,
+                                       height: geometry.size.height * 0.35)
                         }
+                        .padding(.horizontal)
                     }
                 }
             }
