@@ -50,27 +50,7 @@ struct ContentView: View {
                         Text("Information")
                         Text("Calories")
                         Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
-                        Text("Work Out")
+                        
                     }
                     .listStyle(.plain)
                     .frame(width: 200, height: .infinity)
@@ -95,30 +75,11 @@ struct ContentView: View {
                                     .frame( height: height * 0.35)
                                 
                             }
+                            .padding(.horizontal, horizontalPadding)
                             
-                            HStack(spacing: spacing) {
-                                VStack {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .frame(width: width * 0.2,
-                                               height: height * 0.1)
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .frame(width: width * 0.2,
-                                               height: height * 0.1)
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .frame(width: width * 0.2,
-                                               height: height * 0.1)
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .frame(width: width * 0.2,
-                                               height: height * 0.1)
-                                }
-                                RoundedRectangle(cornerRadius: 12)
-                                    .frame(width: width * 0.8 - 40,
-                                           height:height * 0.4 + 20)
-                                
-                                
-                            }
+                            InformationBlockView()
+                                .frame(height: height * 0.8)
                             
-                            Spacer()
                         }
                         .frame(maxWidth: .infinity,
                                maxHeight: .infinity)
