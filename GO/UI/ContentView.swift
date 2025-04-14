@@ -34,6 +34,7 @@ struct ContentView: View {
                         .frame(width: 60, height: 60)
                         .padding(.leading, 16)
                     Text("Mela")
+                        .appFont(.titleBold24)
                     Spacer()
                     HStack(spacing: 16) {
                         Circle()
@@ -49,22 +50,82 @@ struct ContentView: View {
                         Text("Information")
                         Text("Calories")
                         Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
+                        Text("Work Out")
                     }
                     .listStyle(.plain)
-                    .frame(width: 200)
+                    .frame(width: 200, height: .infinity)
                     
                     GeometryReader { geometry in
-                    
-                        HStack {
-                            BurnCaloriesView()
-                                .padding()
-                                .background(.gray.opacity(0.2))
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                                .frame(width: geometry.size.width * 0.6,
-                                       height: geometry.size.height * 0.35)
+                        let width = geometry.size.width
+                        let height = geometry.size.height
+                        let horizontalPadding: CGFloat = 20
+                        let spacing: CGFloat = 20
+                        
+                        VStack(spacing: spacing) {
+                            HStack(spacing: spacing) {
+                                BurnCaloriesView()
+                                    .background(.gray.opacity(0.2))
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                                    .frame(width: width * 0.65,
+                                           height: height * 0.35)
+                                FoodCaloriesBlockView()
+                                    .background(.gray.opacity(0.2))
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                                    .frame(maxWidth: .infinity)
+                                    .frame( height: height * 0.35)
+                                
+                            }
+                            
+                            HStack(spacing: spacing) {
+                                VStack {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .frame(width: width * 0.2,
+                                               height: height * 0.1)
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .frame(width: width * 0.2,
+                                               height: height * 0.1)
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .frame(width: width * 0.2,
+                                               height: height * 0.1)
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .frame(width: width * 0.2,
+                                               height: height * 0.1)
+                                }
+                                RoundedRectangle(cornerRadius: 12)
+                                    .frame(width: width * 0.8 - 40,
+                                           height:height * 0.4 + 20)
+                                
+                                
+                            }
+                            
+                            Spacer()
                         }
-                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity,
+                               maxHeight: .infinity)
+                        
                     }
+                    
+                    
                 }
             }
             

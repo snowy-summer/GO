@@ -26,7 +26,7 @@ struct BurnCaloriesView: View {
                     Spacer()
                     
                 }
-                .padding()
+                .padding(20)
                 
                 
                 HStack {
@@ -70,53 +70,48 @@ struct BurnCaloriesView: View {
                     }
                     .frame(width: geometry.size.width * 0.2)
                     
-                    
-                    VStack {
-                        
-                        GeometryReader { geometry in
-                            let maxBarHeight = geometry.size.height
-                            HStack(alignment: .bottom) {
-                                Spacer()
-                                chartGraph(percent: 0.68,
-                                           text: "S",
-                                           maxBarHeight: maxBarHeight)
-                                
-                                Spacer()
-                                chartGraph(percent: 0.78,
-                                           text: "M",
-                                           maxBarHeight: maxBarHeight)
-                                
-                                Spacer()
-                                chartGraph(percent: 0.78,
-                                           text: "T",
-                                           maxBarHeight: maxBarHeight)
-                                
-                                Spacer()
-                                chartGraph(percent: 0.78,
-                                           text: "W",
-                                           maxBarHeight: maxBarHeight)
-                                
-                                Spacer()
-                                chartGraph(percent: 0.5,
-                                           text: "T",
-                                           maxBarHeight: maxBarHeight)
-                                
-                                Spacer()
-                                chartGraph(percent: 0.84,
-                                           text: "F",
-                                           isHighlighted: true,
-                                           maxBarHeight: maxBarHeight)
-                                
-                                Spacer()
-                                chartGraph(percent: 0,
-                                           text: "S",
-                                           maxBarHeight: maxBarHeight)
-                                Spacer()
-                            }
+                    GeometryReader { geometry in
+                        let maxBarHeight = geometry.size.height
+                        HStack(alignment: .bottom) {
+                            Spacer()
+                            chartGraph(percent: 0.68,
+                                       text: "S",
+                                       maxBarHeight: maxBarHeight)
+                            
+                            Spacer()
+                            chartGraph(percent: 0.78,
+                                       text: "M",
+                                       maxBarHeight: maxBarHeight)
+                            
+                            Spacer()
+                            chartGraph(percent: 0.78,
+                                       text: "T",
+                                       maxBarHeight: maxBarHeight)
+                            
+                            Spacer()
+                            chartGraph(percent: 0.78,
+                                       text: "W",
+                                       maxBarHeight: maxBarHeight)
+                            
+                            Spacer()
+                            chartGraph(percent: 0.5,
+                                       text: "T",
+                                       maxBarHeight: maxBarHeight)
+                            
+                            Spacer()
+                            chartGraph(percent: 0.84,
+                                       text: "F",
+                                       isHighlighted: true,
+                                       maxBarHeight: maxBarHeight)
+                            
+                            Spacer()
+                            chartGraph(percent: 0,
+                                       text: "S",
+                                       maxBarHeight: maxBarHeight)
+                            Spacer()
                         }
-                        
                     }
-                    .padding(.vertical)
+                    .padding(.vertical, 20)
                     .padding(.trailing)
                     
                 }
