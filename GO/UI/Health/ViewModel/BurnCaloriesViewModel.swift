@@ -26,3 +26,10 @@ protocol BurnCaloriesViewModelProtocol: AnyObject, ObservableObject {
     var todayCalories: Int { get }
     var averageCalories: Int { get }
 }
+
+struct CaloriesChartData: Identifiable {
+    let id = UUID()
+    let text: String
+    let rawValue: Int
+    let percent: CGFloat
+}
