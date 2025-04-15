@@ -20,15 +20,14 @@ struct InformationBlockView: View {
                     ForEach(0..<4) { _ in
                         ZStack {
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(width: width * 0.2,
-                                       height: height * 0.1)
+                                .fill(.back)
+                                .frame(width: width * 0.2)
                             cardView()
                             
                         }
                     }
                 }
-                graphView(height: height * 0.4)
+                graphView(height: height - 24)
                 
             }
             .padding(.horizontal, horizontalPadding)
@@ -106,7 +105,7 @@ struct InformationBlockView: View {
         .padding(.bottom)
         .frame(height: height + 20)
         .frame(maxWidth: .infinity)
-        .background(Color.gray.opacity(0.2))
+        .background(.back)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         
     }

@@ -38,19 +38,24 @@ struct ContentView: View {
                     Spacer()
                     HStack(spacing: 16) {
                         Circle()
+                            .fill(.back)
+                            .overlay {
+                                Image(systemName: "bell")
+                            }
                             .frame(width: 40)
                         Circle()
+                            .fill(.back)
+                            .overlay {
+                                Image(systemName: "gearshape")
+                            }
                             .frame(width: 40)
                     }
                     .padding(.horizontal)
                 }
                 HStack {
-                    List {
-                        Text("Dashboard")
-                        Text("Information")
-                        Text("Calories")
-                        Text("Work Out")
-                        
+                    List(HealthViewCategoryListType.allCases, id: \.self) { type in
+                        ImageText(imageTextData: type.data)
+                            .appFont(.bodyRegular16)
                     }
                     .listStyle(.plain)
                     .frame(width: 200, height: .infinity)
@@ -60,30 +65,34 @@ struct ContentView: View {
                         let height = geometry.size.height
                         let horizontalPadding: CGFloat = 20
                         let spacing: CGFloat = 20
-                        
-                        VStack(spacing: spacing) {
-                            HStack(spacing: spacing) {
-                                BurnCaloriesView()
-                                    .background(.gray.opacity(0.2))
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                                    .frame(width: width * 0.65,
-                                           height: height * 0.35)
-                                FoodCaloriesBlockView()
-                                    .background(.gray.opacity(0.2))
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                                    .frame(maxWidth: .infinity)
-                                    .frame( height: height * 0.35)
+                        ScrollView {
+                            VStack(spacing: spacing) {
+                                HStack(spacing: spacing) {
+                                    BurnCaloriesView()
+                                        .background(.back)
+                                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                                        .frame(width: width * 0.65,
+                                               height: height * 0.35)
+                                    FoodCaloriesBlockView()
+                                        .background(.back)
+                                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                                        .frame(maxWidth: .infinity)
+                                        .frame( height: height * 0.35)
+                                    
+                                }
+                                .padding(.horizontal, horizontalPadding)
+                                
+                                InformationBlockView()
+                                    .frame(height: height * 0.4)
+                                
+                                RoundedRectangle(cornerRadius: 20)
+                                    .frame(height: height * 0.8)
                                 
                             }
-                            .padding(.horizontal, horizontalPadding)
-                            
-                            InformationBlockView()
-                                .frame(height: height * 0.8)
+                            .frame(maxWidth: .infinity,
+                                   maxHeight: .infinity)
                             
                         }
-                        .frame(maxWidth: .infinity,
-                               maxHeight: .infinity)
-                        
                     }
                     
                     
