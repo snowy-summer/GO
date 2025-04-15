@@ -83,6 +83,7 @@ struct BurnCaloriesView: View {
                                     Spacer()
                                     chartGraph(percent: calories.percent,
                                                text: calories.text,
+                                               isHighlighted: calories.isToday,
                                                maxBarHeight: maxBarHeight)
                                 }
                             }

@@ -46,6 +46,11 @@ final class DateManager {
         dateFormatter.dateFormat = style.format
         return dateFormatter.string(from: date)
     }
+    
+    func isSameWeekday(_ day1: Date, _ day2: Date) -> Bool {
+        dateFormatter.dateFormat = WeekdayStyle.full.format
+        return dateFormatter.string(from: day1) == dateFormatter.string(from: day2)
+    }
    
     
 }

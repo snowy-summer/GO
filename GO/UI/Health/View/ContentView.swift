@@ -70,18 +70,17 @@ struct ContentView: View {
                             VStack(spacing: spacing) {
                                 HStack(spacing: spacing) {
                                     BurnCaloriesView()
-                                        .background(.back)
+                                        .background(.white)
                                         .clipShape(RoundedRectangle(cornerRadius: 20))
                                         .frame(width: width * 0.65,
                                                height: height * 0.35)
                                     FoodCaloriesBlockView()
-                                        .background(.back)
+                                        .background(.white)
                                         .clipShape(RoundedRectangle(cornerRadius: 20))
                                         .frame(maxWidth: .infinity)
                                         .frame( height: height * 0.35)
                                     
                                 }
-                                .padding(.horizontal, horizontalPadding)
                                 
                                 InformationBlockView()
                                     .frame(height: height * 0.4)
@@ -90,6 +89,7 @@ struct ContentView: View {
                                     .frame(height: height * 0.8)
                                 
                             }
+                            .padding(.horizontal, horizontalPadding)
                             .frame(maxWidth: .infinity,
                                    maxHeight: .infinity)
                             
@@ -103,6 +103,7 @@ struct ContentView: View {
             
             
         }
+        .background(.back)
         
     }
 }

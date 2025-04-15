@@ -12,7 +12,6 @@ struct InformationBlockView: View {
         GeometryReader { geometry in
             let width = geometry.size.width
             let height = geometry.size.height
-            let horizontalPadding: CGFloat = 20
             let spacing: CGFloat = 20
             
             HStack(spacing: spacing) {
@@ -25,20 +24,22 @@ struct InformationBlockView: View {
                 graphView(height: height - 24)
                 
             }
-            .padding(.horizontal, horizontalPadding)
             
         }
     }
     
     func heartCard(width: CGFloat) -> some View {
+        let isMini = UIScreen.main.bounds.width <= 1140
+        let cardWidth = width * (isMini ? 0.25 : 0.2)
+
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.back)
-                .frame(width: width * 0.2)
+                .fill(.white)
+                .frame(width: cardWidth)
             HStack {
                 Image("heartRate")
                     .resizable()
-                    .frame(width: 40, height: 40)
+                    .frame(width: width * 0.03, height: width * 0.03)
                     .padding(.bottom, 8)
                 
                 Text("120")
@@ -47,21 +48,24 @@ struct InformationBlockView: View {
                 Text("BPM")
                     .appFont(.primaryButtonSemiBold16)
             }
-            .frame(maxWidth: width * 0.2, alignment: .leading)
-                    .padding(.leading, 20)
+            .padding(.leading, 20)
+            .frame(maxWidth: cardWidth, alignment: .leading)
             
         }
     }
     
     func sleepCard(width: CGFloat) -> some View {
+        let isMini = UIScreen.main.bounds.width <= 1140
+        let cardWidth = width * (isMini ? 0.25 : 0.2)
+
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.back)
-                .frame(width: width * 0.2)
+                .fill(.white)
+                .frame(width: cardWidth)
             HStack {
                 Image(systemName: "moon.zzz.fill")
                     .resizable()
-                    .frame(width: 40, height: 50)
+                    .frame(width: width * 0.03, height: width * 0.04)
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(.calories, .black)
                     .padding(.bottom, 8)
@@ -76,22 +80,25 @@ struct InformationBlockView: View {
                 Text("m")
                     .appFont(.primaryButtonSemiBold16)
             }
-            .frame(maxWidth: width * 0.2, alignment: .leading)
-                    .padding(.leading, 20)
+            .padding(.leading, 20)
+            .frame(maxWidth: cardWidth, alignment: .leading)
             
         }
     }
     
     func waterCard(width: CGFloat) -> some View {
+        let isMini = UIScreen.main.bounds.width <= 1140
+        let cardWidth = width * (isMini ? 0.25 : 0.2)
+
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.back)
-                .frame(width: width * 0.2)
+                .fill(.white)
+                .frame(width: cardWidth)
             HStack {
                 Image(systemName: "drop.fill")
                     .resizable()
                     .foregroundStyle(.water)
-                    .frame(width: 30, height: 40)
+                    .frame(width: width * 0.03, height: width * 0.04)
                     .padding(.bottom, 8)
                 
                 Text("1.5")
@@ -100,21 +107,27 @@ struct InformationBlockView: View {
                 Text("L")
                     .appFont(.primaryButtonSemiBold16)
             }
-            .frame(maxWidth: width * 0.2, alignment: .leading)
-                    .padding(.leading, 20)
+            .padding(.leading, 20)
+            .frame(maxWidth: cardWidth, alignment: .leading)
+            
             
         }
     }
     
     func stepsCard(width: CGFloat) -> some View {
+        
+        let isMini = UIScreen.main.bounds.width <= 1140
+        let cardWidth = width * (isMini ? 0.25 : 0.2)
+
+        
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.back)
-                .frame(width: width * 0.2)
+                .fill(.white)
+                .frame(maxWidth: cardWidth)
             HStack {
                 Image(systemName: "shoe.fill")
                     .resizable()
-                    .frame(width: 40, height: 30)
+                    .frame(width: width * 0.04, height: width * 0.03)
                     .padding(.bottom, 8)
                 
                 Text("8374")
@@ -123,8 +136,8 @@ struct InformationBlockView: View {
                 Text("Step")
                     .appFont(.primaryButtonSemiBold16)
             }
-            .frame(maxWidth: width * 0.2, alignment: .leading)
             .padding(.leading, 20)
+            .frame(maxWidth: cardWidth, alignment: .leading)
             
         }
     }
@@ -185,7 +198,7 @@ struct InformationBlockView: View {
         .padding(.bottom)
         .frame(height: height + 20)
         .frame(maxWidth: .infinity)
-        .background(.back)
+        .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         
     }

@@ -36,7 +36,8 @@ final class CaloriesCalculatorUseCase: CaloriesCalculatorUseCaseProtocol {
         let caloriesUIData = zip(calories, percentList).map { (entry, percent) in
             CaloriesChartData(text: dateManager.weekdayString(from: entry.date, style: .narrow),
                               rawValue: entry.calories,
-                              percent: percent)
+                              percent: percent,
+                              isToday: dateManager.isSameWeekday(entry.date, Date()))
         }
         
         return caloriesUIData
