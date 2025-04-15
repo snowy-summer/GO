@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CaloriesManager {
+struct CaloriesManager {
     
     func calculateCaloriesPercent(for calories: [Int],
                                   goal: Int) -> [CGFloat] {

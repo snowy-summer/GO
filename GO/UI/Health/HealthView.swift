@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HealthView.swift
 //  GO
 //
 //  Created by 최승범 on 4/14/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct HealthView: View {
     var body: some View {
         HStack {
             VStack(spacing: 20) {
@@ -115,7 +115,7 @@ struct PreviewWrapper_previews: PreviewProvider {
 
     static var previews: some View {
         ForEach(devices, id: \.self) { device in
-            ContentView()
+            HealthView()
                 .previewDevice(PreviewDevice(rawValue: device)) // 프리뷰 디바이스 설정
                 .previewDisplayName(device) // 프리뷰 이름 설정
         }

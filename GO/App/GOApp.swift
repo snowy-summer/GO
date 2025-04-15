@@ -11,7 +11,7 @@ import SwiftUI
 struct GOApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HealthView()
         }
     }
 }
