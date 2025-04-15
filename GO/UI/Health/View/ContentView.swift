@@ -107,6 +107,16 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
+struct PreviewWrapper_previews: PreviewProvider {
+    static let devices = ["iPad Pro 13-inch (M4)",
+                          "iPad Pro 11-inch (M4)",
+                          "iPad mini (A17 Pro)"]
+
+    static var previews: some View {
+        ForEach(devices, id: \.self) { device in
+            ContentView()
+                .previewDevice(PreviewDevice(rawValue: device)) // 프리뷰 디바이스 설정
+                .previewDisplayName(device) // 프리뷰 이름 설정
+        }
+    }
 }

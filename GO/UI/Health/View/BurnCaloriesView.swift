@@ -88,10 +88,13 @@ struct BurnCaloriesView: View {
                             }
                             Spacer()
                         }
+                        .padding(.bottom)
+                        .frame(height: geometry.size.height)
+                        .frame(maxWidth: .infinity)
                         
                     
                     }
-                    .padding(.vertical, 20)
+                    .padding(.bottom, 20)
                     .padding(.trailing)
                     
                 }

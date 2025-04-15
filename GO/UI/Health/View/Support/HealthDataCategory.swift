@@ -1,5 +1,5 @@
 //
-//  InformationType.swift
+//  HealthDataCategory.swift
 //  GO
 //
 //  Created by 최승범 on 4/15/25.
@@ -16,7 +16,7 @@ enum HealthDataCategory: CaseIterable {
     var data: ImageTextData {
         switch self {
         case .heartRate:
-            return ImageTextData(text: "Dashboard", imageName: "house")
+            return ImageTextData(text: "120", imageName: "heartRate")
         case .sleepTime:
             return ImageTextData(text: "Information", imageName: "person.text.rectangle")
         case .stepCount:
