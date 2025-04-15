@@ -1,5 +1,5 @@
 //
-//  BurnCaloriesViewModel.swift
+//  BurnCaloriesCardViewModel.swift
 //  GO
 //
 //  Created by 최승범 on 4/15/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class BurnCaloriesViewModel: BurnCaloriesViewModelProtocol {
+final class BurnCaloriesCardViewModel: BurnCaloriesCardViewModelProtocol {
     
     @Published var calories: [CaloriesChartData] = []
     @Published var duration: String = "13 - 19 April 2025"
@@ -29,7 +29,7 @@ final class BurnCaloriesViewModel: BurnCaloriesViewModelProtocol {
     
 }
 
-protocol BurnCaloriesViewModelProtocol: AnyObject, ObservableObject {
+protocol BurnCaloriesCardViewModelProtocol: AnyObject, ObservableObject {
 
     var calories: [CaloriesChartData] { get }
     var duration: String { get }

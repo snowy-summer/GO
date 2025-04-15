@@ -1,5 +1,5 @@
 //
-// BurnCaloriesView.swift
+// BurnCaloriesCardView.swift
 //  GO
 //
 //  Created by 최승범 on 4/14/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct BurnCaloriesView: View {
+struct BurnCaloriesCardView: View {
     
-    @StateObject private var viewModel = BurnCaloriesViewModel(caloriesUseCase: CaloriesCalculatorUseCase())
+    @StateObject private var viewModel = BurnCaloriesCardViewModel(caloriesUseCase: CaloriesCalculatorUseCase())
     
     var body: some View {
         GeometryReader { geometry in
@@ -134,5 +134,5 @@ struct BurnCaloriesView: View {
 }
 
 #Preview {
-    BurnCaloriesView()
+    BurnCaloriesCardView()
 }

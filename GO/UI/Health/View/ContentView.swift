@@ -69,12 +69,12 @@ struct ContentView: View {
                         ScrollView {
                             VStack(spacing: spacing) {
                                 HStack(spacing: spacing) {
-                                    BurnCaloriesView()
+                                    BurnCaloriesCardView()
                                         .background(.white)
                                         .clipShape(RoundedRectangle(cornerRadius: 20))
                                         .frame(width: width * 0.65,
                                                height: height * 0.35)
-                                    FoodCaloriesBlockView()
+                                    FoodCaloriesCardView()
                                         .background(.white)
                                         .clipShape(RoundedRectangle(cornerRadius: 20))
                                         .frame(maxWidth: .infinity)
@@ -82,7 +82,7 @@ struct ContentView: View {
                                     
                                 }
                                 
-                                InformationBlockView()
+                                InformationCardView()
                                     .frame(height: height * 0.4)
                                 
                                 RoundedRectangle(cornerRadius: 20)

@@ -1,5 +1,5 @@
 //
-//  WaterChartData.swift
+//  InformationChartData.swift
 //  GO
 //
 //  Created by 최승범 on 4/15/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WaterChartData: Identifiable {
+struct InformationChartData: Identifiable {
     let id = UUID()
     let text: String
     let rawValue: Int

@@ -1,5 +1,5 @@
 //
-//  FoodCaloriesBlockView.swift
+//  FoodCaloriesCardView.swift
 //  GO
 //
 //  Created by 최승범 on 4/14/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FoodCaloriesBlockView: View {
+struct FoodCaloriesCardView: View {
     
     @State var percent: CGFloat = 0.2
     let lineWidth: CGFloat = 40
@@ -52,5 +52,5 @@ struct FoodCaloriesBlockView: View {
 }
 
 #Preview {
-    FoodCaloriesBlockView()
+    FoodCaloriesCardView()
 }

@@ -1,5 +1,5 @@
 //
-//  InformationBlockView.swift
+//  InformationCardView.swift
 //  GO
 //
 //  Created by 최승범 on 4/14/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct InformationBlockView: View {
+struct InformationCardView: View {
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
@@ -230,5 +230,5 @@ struct InformationBlockView: View {
 }
 
 #Preview {
-    InformationBlockView()
+    InformationCardView()
 }
