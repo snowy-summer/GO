@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BurnCaloriesView: View {
     
-    @StateObject private var viewModel = BurnCaloriesViewModel()
+    @StateObject private var viewModel = BurnCaloriesViewModel(caloriesUseCase: CaloriesCalculatorUseCase())
     
     var body: some View {
         GeometryReader { geometry in

@@ -7,10 +7,21 @@
 
 import Foundation
 
-final class CaloriesCalculatorUseCase {
+protocol CaloriesCalculatorUseCaseProtocol {
+    func getCaloriesChartData() -> [CaloriesChartData]
+    func calculateCaloriesPercent(for calories: [CaloriesData]) -> [CaloriesChartData]
+}
+
+final class CaloriesCalculatorUseCase: CaloriesCalculatorUseCaseProtocol {
     private let userData: UserDefaultsManager = UserDefaultsManager.shared
     private let caloriesManager: CaloriesManager = CaloriesManager()
+    private let caloriesRepository: CaloriesRepositoryProtocol = MockCaloriesRepository()
     
+    
+    func getCaloriesChartData() -> [CaloriesChartData] {
+        let calories = caloriesRepository.fetchCaloriesThisWeek()
+        return calculateCaloriesPercent(for: calories)
+    }
     
     func calculateCaloriesPercent(for calories: [CaloriesData]) -> [CaloriesChartData] {
         
@@ -25,6 +36,9 @@ final class CaloriesCalculatorUseCase {
         }
         
         return caloriesUIData
-        
     }
+    
+    
 }
+
+
