@@ -9,5 +9,5 @@ import Foundation
 
 struct CaloriesData: Codable {
     var calories: Int
-    var date: String
+    var date: Date
 }

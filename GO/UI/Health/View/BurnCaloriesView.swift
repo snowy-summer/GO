@@ -77,44 +77,19 @@ struct BurnCaloriesView: View {
                     // 그래프
                     GeometryReader { geometry in
                         let maxBarHeight = geometry.size.height
-                        HStack(alignment: .bottom) {
-                            Spacer()
-                            chartGraph(percent: 0.68,
-                                       text: "S",
-                                       maxBarHeight: maxBarHeight)
-                            
-                            Spacer()
-                            chartGraph(percent: 0.78,
-                                       text: "M",
-                                       maxBarHeight: maxBarHeight)
-                            
-                            Spacer()
-                            chartGraph(percent: 0.78,
-                                       text: "T",
-                                       maxBarHeight: maxBarHeight)
-                            
-                            Spacer()
-                            chartGraph(percent: 0.78,
-                                       text: "W",
-                                       maxBarHeight: maxBarHeight)
-                            
-                            Spacer()
-                            chartGraph(percent: 0.5,
-                                       text: "T",
-                                       maxBarHeight: maxBarHeight)
-                            
-                            Spacer()
-                            chartGraph(percent: 0.84,
-                                       text: "F",
-                                       isHighlighted: true,
-                                       maxBarHeight: maxBarHeight)
-                            
-                            Spacer()
-                            chartGraph(percent: 0,
-                                       text: "S",
-                                       maxBarHeight: maxBarHeight)
+                        HStack(alignment: .bottom){
+                            ForEach(viewModel.calories) { calories in
+                                HStack {
+                                    Spacer()
+                                    chartGraph(percent: calories.percent,
+                                               text: calories.text,
+                                               maxBarHeight: maxBarHeight)
+                                }
+                            }
                             Spacer()
                         }
+                        
+                    
                     }
                     .padding(.vertical, 20)
                     .padding(.trailing)
@@ -124,9 +99,12 @@ struct BurnCaloriesView: View {
             }
             
         }
+        .onAppear {
+            viewModel.fetchCalories()
+        }
     }
     
-    func chartGraph(percent: Float,
+    func chartGraph(percent: CGFloat,
                     text: String,
                     isHighlighted: Bool = false,
                     maxBarHeight: CGFloat) -> some View {

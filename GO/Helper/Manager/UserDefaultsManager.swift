@@ -23,7 +23,7 @@ final class UserDefaultsManager {
     static let shared = UserDefaultsManager()
     private init() {}
 
-    @UserDefault(key: "caloriesGoal", defaultValue: 0)
+    @UserDefault(key: "caloriesGoal", defaultValue: 600)
     var caloriesGoal: Int
 
 }

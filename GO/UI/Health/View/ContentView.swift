@@ -58,7 +58,8 @@ struct ContentView: View {
                             .appFont(.bodyRegular16)
                     }
                     .listStyle(.plain)
-                    .frame(width: 200, height: .infinity)
+                    .frame(width: 200)
+                    .frame(maxHeight: .infinity)
                     
                     GeometryReader { geometry in
                         let width = geometry.size.width

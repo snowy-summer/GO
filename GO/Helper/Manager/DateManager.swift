@@ -31,5 +31,38 @@ final class DateManager {
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
+    
+    func getDate(from date : String, format: String = "YYYY.MM.dd") -> Date {
+        dateFormatter.dateFormat = format
+        guard let dateValue = dateFormatter.date(from: date) else {
+            LogManager.log("String -> Date 변환 실패\nString을 확인하세요")
+            return Date()
+        }
+        return dateValue
+    }
+    
+    func weekdayString(from date: Date,
+                       style: WeekdayStyle) -> String {
+        dateFormatter.dateFormat = style.format
+        return dateFormatter.string(from: date)
+    }
    
+    
+}
+
+enum WeekdayStyle {
+    case short    // "Sun"
+    case full     // "Sunday"
+    case narrow   // "S"
+
+    var format: String {
+        switch self {
+        case .short:
+            return "E"
+        case .full:
+            return "EEEE"
+        case .narrow:
+            return "EEEEE"
+        }
+    }
 }
