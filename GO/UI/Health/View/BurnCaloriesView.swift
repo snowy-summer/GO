@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct BurnCaloriesView: View {
+    
+    @StateObject private var viewModel = BurnCaloriesViewModel()
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
+                // 상단 이름
                 HStack {
                     Image(systemName: "flame.fill")
                         .resizable()
@@ -19,7 +23,7 @@ struct BurnCaloriesView: View {
                     Text("Burn Calories")
                         .appFont(.listTitleBold20)
                     
-                    Text("13 - 19 April 2025 ")
+                    Text(viewModel.duration)
                         .appFont(.tagSemiBold12)
                         .foregroundStyle(.sub)
                         .padding(.horizontal)
@@ -31,7 +35,7 @@ struct BurnCaloriesView: View {
                 
                 HStack {
                     VStack(spacing: 20) {
-                        
+                        // 칼로리 글자 표시
                         VStack {
                             HStack {
                                 Text("Today")
@@ -41,7 +45,7 @@ struct BurnCaloriesView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("872")
+                                Text("\(viewModel.todayCalories)")
                                     .appFont(.listTitleBold20)
                                 Text("kcal")
                                     .appFont(.tagSemiBold12)
@@ -58,7 +62,7 @@ struct BurnCaloriesView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("653")
+                                Text("\(viewModel.averageCalories)")
                                     .appFont(.listTitleBold20)
                                 Text("kcal")
                                     .appFont(.tagSemiBold12)
@@ -70,6 +74,7 @@ struct BurnCaloriesView: View {
                     }
                     .frame(width: geometry.size.width * 0.2)
                     
+                    // 그래프
                     GeometryReader { geometry in
                         let maxBarHeight = geometry.size.height
                         HStack(alignment: .bottom) {
