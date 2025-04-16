@@ -1,5 +1,5 @@
 //
-//  FetchSleepTimeUseCase.swift
+//  SleepTimeChartUseCase.swift
 //  GO
 //
 //  Created by 최승범 on 4/15/25.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol FetchSleepTimeUseCaseProtocol {
+protocol SleepTimeChartUseCaseProtocol {
     func fetchSleepTimeChartData() -> [SleepTimeChartData]
     func calculateSleepTimePercent(for rates: [SleepTimeData]) -> [SleepTimeChartData]
 }
 
-final class FetchSleepTimeUseCase: FetchSleepTimeUseCaseProtocol {
+final class SleepTimeChartUseCase: SleepTimeChartUseCaseProtocol {
     private let userData: UserDefaultsManager = UserDefaultsManager.shared
     private let dateManager: DateManager = DateManager.shared
     private let healtManager: HealthInformationManager = HealthInformationManager()

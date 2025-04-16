@@ -1,5 +1,5 @@
 //
-//  FetchHeartRateUseCase.swift
+//  HeartRateChartUseCase.swift
 //  GO
 //
 //  Created by 최승범 on 4/15/25.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol FetchHeartRateUseCaseProtocol {
+protocol HeartRateChartUseCaseProtocol {
     func fetchHeartRateChartData() -> [InformationChartData]
     func calculateHeartRatePercent(for rates: [HeartRateData]) -> [InformationChartData]
 }
 
-final class FetchHeartRateUseCase: FetchHeartRateUseCaseProtocol {
+final class HeartRateChartUseCase: HeartRateChartUseCaseProtocol {
     private let userData: UserDefaultsManager = UserDefaultsManager.shared
     private let dateManager: DateManager = DateManager.shared
     private let healtManager: HealthInformationManager = HealthInformationManager()

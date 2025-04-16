@@ -26,4 +26,13 @@ struct HealthInformationManager {
         return time.map { CGFloat($0.hour * 60 + $0.minute) / CGFloat(maxValue) }
     }
     
+    func calculateStepsPercent(for steps: [Int]) -> [CGFloat] {
+        guard !steps.isEmpty else { return [] }
+        
+        let maxValue = steps.max()! + 2000
+        
+        
+        return time.map { CGFloat($0) / CGFloat(maxValue) }
+    }
+    
 }
