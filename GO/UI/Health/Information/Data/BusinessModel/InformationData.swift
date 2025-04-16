@@ -26,3 +26,9 @@ struct WaterData {
     let amount: Double
     let date: Date
 }
+
+struct Time {
+    var hour: Int
+    var minute: Int
+    var second: Int = 0
+}

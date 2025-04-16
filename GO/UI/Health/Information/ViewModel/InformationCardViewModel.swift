@@ -7,31 +7,121 @@
 
 import Foundation
 
+protocol InformationCardViewModelProtocol: AnyObject, ObservableObject {
+    associatedtype Intent
+
+    var heartRateChartDataList: [InformationChartData] { get }
+    var sleepTimeChartDataList: [SleepTimeChartData] { get }
+    var stepsChartDataList: [InformationChartData] { get }
+    var waterChartDataList: [WaterChartData] { get }
+    var duration: String { get }
+    var todayHeartRate: Int { get }
+    var todaySleepTime: Time { get }
+    var todayWater: Double { get }
+    var todaySteps: Int { get }
+    var selectedInformationCard: InformationCardType { get }
+    var isAnimating: Bool { get }
+    
+    func action(_ intent: Intent)
+}
+
 final class InformationCardViewModel: InformationCardViewModelProtocol {
     
+    @Published var heartRateChartDataList: [InformationChartData] = []
+    @Published var sleepTimeChartDataList: [SleepTimeChartData] = []
+    @Published var stepsChartDataList: [InformationChartData] = []
+    @Published var waterChartDataList: [WaterChartData] = []
     
-    @Published var informationChartDataList: [InformationChartData] = []
     @Published var duration: String = "13 - 19 April 2025"
     
     @Published var todayHeartRate: Int = 0
     @Published var todaySleepTime: Time = Time(hour: 0, minute: 0)
-    @Published var todayWater: Float = 0
+    @Published var todayWater: Double = 0
     @Published var todaySteps: Int = 0
+    
+    @Published var selectedInformationCard: InformationCardType = .heartRate
+    @Published var isAnimating: Bool = false
+    
+    private let heartRateChartUseCase: HeartRateChartUseCaseProtocol
+    private let sleepTimeChartUseCase: SleepTimeChartUseCaseProtocol
+    private let stepsChartUseCase: StepsChartUseCaseProtocol
+    private let waterChartUseCase: WaterChartUseCaseProtocol
+    
+    enum Intent {
+        case fetchAllData
+        case fetchHeartRateData
+        case fetchSleepTimeData
+        case fetchStepsData
+        case fetchWaterData
+        case selectCard(InformationCardType)
+        case animationOn
+    }
+    
+    init(heartRateChartUseCase: HeartRateChartUseCaseProtocol = HeartRateChartUseCase(),
+         sleepTimeChartUseCase: SleepTimeChartUseCaseProtocol = SleepTimeChartUseCase(),
+         stepsChartUseCase: StepsChartUseCaseProtocol = StepsChartUseCase(),
+         waterChartUseCase: WaterChartUseCaseProtocol = WaterChartUseCase()) {
+        self.heartRateChartUseCase = heartRateChartUseCase
+        self.sleepTimeChartUseCase = sleepTimeChartUseCase
+        self.stepsChartUseCase = stepsChartUseCase
+        self.waterChartUseCase = waterChartUseCase
+    }
+    
+    func action(_ intent: Intent) {
+        switch intent {
+        case .fetchAllData:
+            heartRateChartDataList = heartRateChartUseCase.fetchChartData()
+            sleepTimeChartDataList = sleepTimeChartUseCase.fetchChartData()
+            stepsChartDataList = stepsChartUseCase.fetchChartData()
+            waterChartDataList = waterChartUseCase.fetchChartData()
+            
+            todayValue()
+            
+        case .fetchHeartRateData:
+            heartRateChartDataList = heartRateChartUseCase.fetchChartData()
+            
+        case .fetchSleepTimeData:
+            sleepTimeChartDataList = sleepTimeChartUseCase.fetchChartData()
+            
+        case .fetchStepsData:
+            stepsChartDataList = stepsChartUseCase.fetchChartData()
+            
+        case .fetchWaterData:
+            waterChartDataList = waterChartUseCase.fetchChartData()
+            
+        case .selectCard(let type):
+            if type == selectedInformationCard { return }
+            switch type {
+            case .heartRate:
+                selectedInformationCard = .heartRate
+            case .sleepTime:
+                selectedInformationCard = .sleepTime
+            case .steps:
+                selectedInformationCard = .steps
+            case .water:
+                selectedInformationCard = .water
+            }
+            isAnimating = false
+            
+        case .animationOn:
+            isAnimating = true
+        }
+    }
     
 }
 
-protocol InformationCardViewModelProtocol: AnyObject, ObservableObject {
-
-    var informationChartDataList: [InformationChartData] { get }
-    var duration: String { get }
-    var todayHeartRate: Int { get }
-    var todaySleepTime: Time { get }
-    var todayWater: Float { get }
-    var todaySteps: Int { get }
-}
-
-struct Time {
-    var hour: Int
-    var minute: Int
-    var second: Int = 0
+extension InformationCardViewModel {
+    
+    /// 오늘 데이터의  rawValue만 추출하는 공통 함수
+    func extractTodayValue<T>(from list: [T]) -> T.RawValue where T: HasTodayValue {
+        return list.first(where: { $0.isToday })?.rawValue ?? T.zeroValue
+    }
+    
+    func todayValue() {
+        todayHeartRate = extractTodayValue(from: heartRateChartDataList)
+        todaySleepTime = extractTodayValue(from: sleepTimeChartDataList)
+        todaySteps = extractTodayValue(from: stepsChartDataList)
+        todayWater = extractTodayValue(from: waterChartDataList)
+    }
+    
 }

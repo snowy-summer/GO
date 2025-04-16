@@ -104,7 +104,7 @@ struct BurnCaloriesCardView: View {
             
         }
         .onAppear {
-            viewModel.fetchCalories()
+            viewModel.action(.fetchCalories)
         }
     }
     
@@ -119,6 +119,8 @@ struct BurnCaloriesCardView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(barColor)
                 .frame(width: 20, height: barHeight)
+                .scaleEffect(y: viewModel.isAnimating ? 1.0 : 0.0, anchor: .bottom)
+                .animation(.easeOut(duration: 0.8), value: viewModel.isAnimating)
             
             Circle()
                 .fill(barColor)
@@ -129,6 +131,9 @@ struct BurnCaloriesCardView: View {
                 .foregroundColor(.primary)
                 .padding(.top, 2)
             
+        }
+        .onAppear {
+            viewModel.action(.animationOn)
         }
     }
 }
