@@ -32,7 +32,16 @@ struct HealthInformationManager {
         let maxValue = steps.max()! + 2000
         
         
-        return time.map { CGFloat($0) / CGFloat(maxValue) }
+        return steps.map { CGFloat($0) / CGFloat(maxValue) }
+    }
+    
+    func calculateWaterPercent(for amount: [Double]) -> [CGFloat] {
+        guard !amount.isEmpty else { return [] }
+        
+        let maxValue = ceil(amount.max()!) 
+        
+        
+        return amount.map { CGFloat($0) / CGFloat(maxValue) }
     }
     
 }

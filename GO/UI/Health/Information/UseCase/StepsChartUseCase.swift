@@ -14,8 +14,8 @@ protocol StepsChartUseCaseProtocol {
 
 struct StepsChartUseCase: StepsChartUseCaseProtocol {
     private let repository: StepsRepositoryProtocol
-    private let dateManager: DateManager = DateManager.shared
-    private let healtManager: HealthInformationManager = HealthInformationManager()
+    private let dateManager: DateManager = .shared
+    private let healthManager: HealthInformationManager = HealthInformationManager()
 
     init(repository: StepsRepositoryProtocol = MockStepsRepository()) {
         self.repository = repository
@@ -28,7 +28,7 @@ struct StepsChartUseCase: StepsChartUseCaseProtocol {
 
     func calculatePercent(from data: [StepsData]) -> [InformationChartData] {
         let values = data.map { $0.steps }
-        let percents = healtManager.calculateStepsPercent(for: values)
+        let percents = healthManager.calculateStepsPercent(for: values)
 
         return zip(data, percents).map { item, percent in
             InformationChartData(
