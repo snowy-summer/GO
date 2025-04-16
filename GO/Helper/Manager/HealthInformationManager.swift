@@ -17,4 +17,13 @@ struct HealthInformationManager {
         return rates.map { CGFloat($0) / CGFloat(maxValue) }
     }
     
+    func calculateSleepTimePercent(for time: [Time]) -> [CGFloat] {
+        guard !time.isEmpty else { return [] }
+        
+        let maxValue = 1440 // 24 * 60
+        
+        
+        return time.map { CGFloat($0.hour * 60 + $0.minute) / CGFloat(maxValue) }
+    }
+    
 }
