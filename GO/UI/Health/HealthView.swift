@@ -12,11 +12,9 @@ struct HealthView: View {
         HStack {
             VStack(spacing: 20) {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.purple)
                     .frame(width: 48, height: 48)
                 
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.purple)
                     .frame(width: 48, height: 48)
                 Spacer()
             }

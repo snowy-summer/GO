@@ -34,7 +34,7 @@ struct WeightCardView: View {
                 .padding(20)
                 
                 
-                HStack {
+                HStack(alignment: .center) {
                     VStack(spacing: 20) {
                         VStack {
                             HStack {
@@ -98,14 +98,25 @@ struct WeightCardView: View {
                                 .appFont(.tagSemiBold12)
                                        .foregroundColor(.gray)
                         })
+                        
+                        RuleMark(y: .value("Goal", viewModel.goalWeight))
+                                .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
+                                .foregroundStyle(.green)
+                                .annotation(position: .top, alignment: .leading) {
+                                    Text("🎯 Goal: \(viewModel.goalWeight, specifier: "%.1f") kg")
+                                        .appFont(.tagSemiBold12)
+                                        .foregroundColor(.gray)
+                                }
                        
                     }
                     .chartYScale(domain: viewModel.minWeight...viewModel.maxWeight)
                     
-                    .frame(height: maxBarHeight)
+                    .frame(maxHeight: .infinity)
                     .frame(maxWidth: .infinity)
                     .padding(.trailing)
+                    
                 }
+                .padding(.bottom)
                 
             }
             
