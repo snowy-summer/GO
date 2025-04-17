@@ -98,13 +98,8 @@ struct HealthView: View {
                             
                         }
                     }
-                    
-                    
                 }
             }
-            
-            
-            
         }
         .background(.back)
         
