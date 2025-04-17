@@ -8,12 +8,12 @@
 import Foundation
 
 struct BurnCaloriesData: Codable {
-    var calories: Int
-    var date: Date
+    let calories: Int
+    let date: Date
 }
 
 struct FoodCaloriesData: Codable {
-    var calories: Int
-    var date: Date
-    var type: String
+    let calories: Int
+    let date: Date
+    let type: String
 }

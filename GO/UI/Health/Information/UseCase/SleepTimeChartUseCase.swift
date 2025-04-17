@@ -9,7 +9,6 @@ import Foundation
 
 protocol SleepTimeChartUseCaseProtocol {
     func fetchChartData() -> [SleepTimeChartData]
-    func calculatePercent(for rates: [SleepTimeData]) -> [SleepTimeChartData]
 }
 
 final class SleepTimeChartUseCase: SleepTimeChartUseCaseProtocol {
@@ -24,7 +23,7 @@ final class SleepTimeChartUseCase: SleepTimeChartUseCaseProtocol {
     }
     
     /// 수면 시간 퍼센트 계산
-    func calculatePercent(for times: [SleepTimeData]) -> [SleepTimeChartData] {
+    private func calculatePercent(for times: [SleepTimeData]) -> [SleepTimeChartData] {
         
         let timeRawValue = times.map { $0.time }
         let percentList = healthManager.calculateSleepTimePercent(for: timeRawValue)

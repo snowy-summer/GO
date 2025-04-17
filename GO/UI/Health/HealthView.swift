@@ -88,8 +88,12 @@ struct HealthView: View {
                                 InformationCardView()
                                     .frame(height: height * 0.4)
                                 
-                                RoundedRectangle(cornerRadius: 20)
-                                    .frame(height: height * 0.8)
+                                WeightCardView()
+                                    .background(.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: height * 0.5)
+                                    
                                 
                             }
                             .padding(.horizontal, horizontalPadding)

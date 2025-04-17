@@ -9,7 +9,6 @@ import Foundation
 
 protocol StepsChartUseCaseProtocol {
     func fetchChartData() -> [InformationChartData]
-    func calculatePercent(from data: [StepsData]) -> [InformationChartData]
 }
 
 struct StepsChartUseCase: StepsChartUseCaseProtocol {
@@ -26,7 +25,7 @@ struct StepsChartUseCase: StepsChartUseCaseProtocol {
         return calculatePercent(from: steps)
     }
 
-    func calculatePercent(from data: [StepsData]) -> [InformationChartData] {
+    private func calculatePercent(from data: [StepsData]) -> [InformationChartData] {
         let values = data.map { $0.steps }
         let percents = healthManager.calculateStepsPercent(for: values)
 

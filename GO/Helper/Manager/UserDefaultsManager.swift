@@ -28,4 +28,7 @@ final class UserDefaultsManager {
 
     @UserDefault(key: "foodCaloriesGoal", defaultValue: 2400)
     var foodCaloriesGoal: Int
+    
+    @UserDefault(key: "weightGoal", defaultValue: 70)
+    var weightGoal: Double
 }
