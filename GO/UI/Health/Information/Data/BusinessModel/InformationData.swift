@@ -28,7 +28,7 @@ struct WaterData {
 }
 
 struct Time {
-    var hour: Int
-    var minute: Int
-    var second: Int = 0
+    let hour: Int
+    let minute: Int
+    let second: Int = 0
 }
