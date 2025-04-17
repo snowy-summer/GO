@@ -19,7 +19,7 @@ final class MockStepsRepository: StepsRepositoryProtocol {
             StepsData(steps: 10048, date: dateManager.getDate(from: "2025.04.15")), // 화
             StepsData(steps: 2842, date: dateManager.getDate(from: "2025.04.16")), // 수
             StepsData(steps: 5654, date: dateManager.getDate(from: "2025.04.17")), // 목
-            StepsData(steps: 30000, date: dateManager.getDate(from: "2025.04.18")), // 금
+            StepsData(steps: 3000, date: dateManager.getDate(from: "2025.04.18")), // 금
             StepsData(steps: 3948, date: dateManager.getDate(from: "2025.04.19"))  // 토
         ]
     }

@@ -97,6 +97,7 @@ final class InformationCardViewModel: InformationCardViewModelProtocol {
             case .water:
                 selectedInformationCard = .water
             }
+            getDateRange()
             isAnimating = false
             
         case .animationOn:

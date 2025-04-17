@@ -72,44 +72,39 @@ struct WeightCardView: View {
                         
                         
                     }
-                    .frame(width: geometry.size.width * 0.2)
+                    .frame(width: geometry.size.width * 0.15)
                     
-                    // 그래프
-                    GeometryReader { geometry in
-                        let maxBarHeight = geometry.size.height
-                        Chart(viewModel.weightList) { record in
-                            LineMark(
-                                x: .value("day", record.date),
-                                y: .value("weight", record.weight)
-                            )
-                            .interpolationMethod(.catmullRom)
-                            .foregroundStyle(.weight)
-                            
-                            PointMark(
-                                x: .value("day", record.date),
-                                y: .value("weight", record.weight)
-                            )
-                            .symbolSize(maxBarHeight * 0.5)
-                            .foregroundStyle(.weight)
-                            .annotation(position: .automatic,
-                                        alignment: .center,
-                                        spacing: 8,
-                                        content: {
-                                Text("\(record.weight, specifier: "%.1f")")
-                                    .appFont(.tagSemiBold12)
-                                           .foregroundColor(.gray)
-                            })
-                           
-                        }
-                        .chartYScale(domain: viewModel.minWeight...viewModel.maxWeight)
-                        .padding(.bottom)
-                        .frame(height: maxBarHeight)
-                        .frame(maxWidth: .infinity)
+                    
+                    let maxBarHeight = geometry.size.height
+                    Chart(viewModel.weightList) { record in
+                        LineMark(
+                            x: .value("day", record.date),
+                            y: .value("weight", record.weight)
+                        )
+                        .interpolationMethod(.catmullRom)
+                        .foregroundStyle(.weight)
+                        
+                        PointMark(
+                            x: .value("day", record.date),
+                            y: .value("weight", record.weight)
+                        )
+                        .symbolSize(maxBarHeight * 0.5)
+                        .foregroundStyle(.weight)
+                        .annotation(position: .automatic,
+                                    alignment: .center,
+                                    spacing: 8,
+                                    content: {
+                            Text("\(record.weight, specifier: "%.1f")")
+                                .appFont(.tagSemiBold12)
+                                       .foregroundColor(.gray)
+                        })
+                       
                     }
-                    .padding(.bottom, 20)
+                    .chartYScale(domain: viewModel.minWeight...viewModel.maxWeight)
+                    
+                    .frame(height: maxBarHeight)
+                    .frame(maxWidth: .infinity)
                     .padding(.trailing)
-                    
-                    
                 }
                 
             }
