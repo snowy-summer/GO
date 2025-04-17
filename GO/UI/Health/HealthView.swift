@@ -56,6 +56,9 @@ struct HealthView: View {
                     List(HealthViewCategoryListType.allCases, id: \.self) { type in
                         ImageText(imageTextData: type.data)
                             .appFont(.bodyRegular16)
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            
                     }
                     .listStyle(.plain)
                     .frame(width: 200)
