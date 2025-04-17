@@ -7,9 +7,8 @@
 
 import Foundation
 
-protocol BurnCaloriesCardViewModelProtocol: AnyObject, ObservableObject {
-
-    var calories: [CaloriesChartData] { get }
+protocol BurnCaloriesCardViewModelProtocol: ViewModelAble {
+    var calories: [BurnCaloriesChartData] { get }
     var duration: String { get }
     var todayCalories: Int { get }
     var averageCalories: Int { get }
@@ -17,7 +16,7 @@ protocol BurnCaloriesCardViewModelProtocol: AnyObject, ObservableObject {
 
 final class BurnCaloriesCardViewModel: BurnCaloriesCardViewModelProtocol {
     
-    @Published var calories: [CaloriesChartData] = []
+    @Published var calories: [BurnCaloriesChartData] = []
     @Published var duration: String = "13 - 19 April 2025"
     
     @Published var todayCalories: Int = 0
@@ -25,21 +24,21 @@ final class BurnCaloriesCardViewModel: BurnCaloriesCardViewModelProtocol {
     
     @Published var isAnimating: Bool = false
     
-    private let caloriesUseCase: CaloriesCalculatorUseCaseProtocol
+    private let caloriesUseCase: BurnCaloriesCalculatorUseCaseProtocol
     
     enum Intent {
         case fetchCalories
         case animationOn
     }
     
-    init(caloriesUseCase: CaloriesCalculatorUseCaseProtocol = CaloriesCalculatorUseCase()) {
+    init(caloriesUseCase: BurnCaloriesCalculatorUseCaseProtocol = BurnCaloriesCalculatorUseCase()) {
         self.caloriesUseCase = caloriesUseCase
     }
     
     func action(_ intent: Intent) {
         switch intent {
         case .fetchCalories:
-            calories = caloriesUseCase.getCaloriesChartData()
+            calories = caloriesUseCase.getBurnCaloriesChartData()
             isAnimating = false
             
         case .animationOn:

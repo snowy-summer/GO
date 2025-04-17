@@ -7,9 +7,7 @@
 
 import Foundation
 
-protocol InformationCardViewModelProtocol: AnyObject, ObservableObject {
-    associatedtype Intent
-
+protocol InformationCardViewModelProtocol: ViewModelAble {
     var heartRateChartDataList: [InformationChartData] { get }
     var sleepTimeChartDataList: [SleepTimeChartData] { get }
     var stepsChartDataList: [InformationChartData] { get }
@@ -21,8 +19,6 @@ protocol InformationCardViewModelProtocol: AnyObject, ObservableObject {
     var todaySteps: Int { get }
     var selectedInformationCard: InformationCardType { get }
     var isAnimating: Bool { get }
-    
-    func action(_ intent: Intent)
 }
 
 final class InformationCardViewModel: InformationCardViewModelProtocol {

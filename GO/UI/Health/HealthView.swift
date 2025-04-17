@@ -38,13 +38,13 @@ struct HealthView: View {
                     Spacer()
                     HStack(spacing: 16) {
                         Circle()
-                            .fill(.back)
+                            .fill(.white)
                             .overlay {
                                 Image(systemName: "bell")
                             }
                             .frame(width: 40)
                         Circle()
-                            .fill(.back)
+                            .fill(.white)
                             .overlay {
                                 Image(systemName: "gearshape")
                             }
