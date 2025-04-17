@@ -9,7 +9,6 @@ import Foundation
 
 protocol WaterChartUseCaseProtocol {
     func fetchChartData() -> [WaterChartData]
-    func calculatePercent(from data: [WaterData]) -> [WaterChartData]
 }
 
 struct WaterChartUseCase: WaterChartUseCaseProtocol {
@@ -26,7 +25,7 @@ struct WaterChartUseCase: WaterChartUseCaseProtocol {
         return calculatePercent(from: waterList)
     }
 
-    func calculatePercent(from data: [WaterData]) -> [WaterChartData] {
+    private func calculatePercent(from data: [WaterData]) -> [WaterChartData] {
         let values = data.map { $0.amount }
         let percents = healthManager.calculateWaterPercent(for: values)
 

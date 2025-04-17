@@ -10,9 +10,7 @@ import Charts
 
 struct WeightCardView: View {
     
-    @StateObject private var viewModel = BurnCaloriesCardViewModel(caloriesUseCase: BurnCaloriesCalculatorUseCase())
-    
-    let weightRecords: [WeightChartData]
+    @StateObject private var viewModel = WeightCardViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -47,7 +45,7 @@ struct WeightCardView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.todayCalories)")
+                                Text("\(viewModel.recentWeight, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -64,7 +62,7 @@ struct WeightCardView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.averageCalories)")
+                                Text("\(viewModel.goalWeight, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -79,20 +77,20 @@ struct WeightCardView: View {
                     // 그래프
                     GeometryReader { geometry in
                         let maxBarHeight = geometry.size.height
-                        Chart(weightRecords) { record in
+                        Chart(viewModel.weightList) { record in
                             LineMark(
                                 x: .value("day", record.date),
                                 y: .value("weight", record.weight)
                             )
                             .interpolationMethod(.catmullRom)
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.weight)
                             
                             PointMark(
                                 x: .value("day", record.date),
                                 y: .value("weight", record.weight)
                             )
                             .symbolSize(maxBarHeight * 0.5)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.weight)
                             .annotation(position: .automatic,
                                         alignment: .center,
                                         spacing: 8,
@@ -103,6 +101,7 @@ struct WeightCardView: View {
                             })
                            
                         }
+                        .chartYScale(domain: viewModel.minWeight...viewModel.maxWeight)
                         .padding(.bottom)
                         .frame(height: maxBarHeight)
                         .frame(maxWidth: .infinity)
@@ -117,26 +116,11 @@ struct WeightCardView: View {
             
         }
         .onAppear {
-            viewModel.action(.fetchCalories)
+            viewModel.action(.fetchWeight)
         }
     }
 }
 
 #Preview {
-    WeightCardView(weightRecords: [
-        WeightChartData(date: "11/11", weight: 29.8),
-        WeightChartData(date: "11/12", weight: 70.2),
-        WeightChartData(date: "11/13", weight: 52.3)
-    ])
+    WeightCardView()
 }
-
-let mock = [
-    WeightChartData(date: "11/11", weight: 29.8),
-    WeightChartData(date: "11/12", weight: 70.2),
-    WeightChartData(date: "11/13", weight: 52.3),
-    WeightChartData(date: "11/14", weight: 29.8),
-    WeightChartData(date: "11/15", weight: 70.2),
-    WeightChartData(date: "11/16", weight: 52.3),
-    WeightChartData(date: "11/17", weight: 29.8),
-    WeightChartData(date: "11/18", weight: 70.2)
-]

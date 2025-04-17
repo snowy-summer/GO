@@ -8,6 +8,6 @@
 import Foundation
 
 struct WeightData: Codable {
-    let date: Date
     let weight: Double
+    let date: Date
 }

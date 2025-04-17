@@ -9,6 +9,6 @@ import Foundation
 
 struct WeightChartData: Identifiable {
     let id = UUID()
-    let date: String
     let weight: Double
+    let date: String
 }

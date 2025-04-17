@@ -9,7 +9,6 @@ import Foundation
 
 protocol HeartRateChartUseCaseProtocol {
     func fetchChartData() -> [InformationChartData]
-    func calculatePercent(for rates: [HeartRateData]) -> [InformationChartData]
 }
 
 final class HeartRateChartUseCase: HeartRateChartUseCaseProtocol {
@@ -25,7 +24,7 @@ final class HeartRateChartUseCase: HeartRateChartUseCaseProtocol {
     }
     
     /// 심장 박동수 퍼센트 계산
-    func calculatePercent(for rates: [HeartRateData]) -> [InformationChartData] {
+    private func calculatePercent(for rates: [HeartRateData]) -> [InformationChartData] {
         
         let heartRateRawValue = rates.map { $0.heartRate }
         let percentList = healthManager.calculateHeartRatePercent(for: heartRateRawValue)

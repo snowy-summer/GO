@@ -88,7 +88,7 @@ struct HealthView: View {
                                 InformationCardView()
                                     .frame(height: height * 0.4)
                                 
-                                WeightCardView(weightRecords: mock)
+                                WeightCardView()
                                     .background(.white)
                                     .clipShape(RoundedRectangle(cornerRadius: 20))
                                     .frame(maxWidth: .infinity)
