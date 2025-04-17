@@ -17,7 +17,7 @@ protocol BurnCaloriesCardViewModelProtocol: ViewModelAble {
 final class BurnCaloriesCardViewModel: BurnCaloriesCardViewModelProtocol {
     
     @Published var calories: [BurnCaloriesChartData] = []
-    @Published var duration: String = "13 - 19 April 2025"
+    @Published var duration: String = ""
     
     @Published var todayCalories: Int = 0
     @Published var averageCalories: Int = 0
@@ -39,6 +39,9 @@ final class BurnCaloriesCardViewModel: BurnCaloriesCardViewModelProtocol {
         switch intent {
         case .fetchCalories:
             calories = caloriesUseCase.getBurnCaloriesChartData()
+            todayCalories = caloriesUseCase.todayBurnCalories()
+            averageCalories = caloriesUseCase.weekAverageBurnCalories()
+            duration = caloriesUseCase.getDateRange()
             isAnimating = false
             
         case .animationOn:

@@ -9,7 +9,9 @@ import Foundation
 
 protocol BurnCaloriesCalculatorUseCaseProtocol {
     func getBurnCaloriesChartData() -> [BurnCaloriesChartData]
-    func calculateCaloriesPercent(for calories: [BurnCaloriesData]) -> [BurnCaloriesChartData]
+    func todayBurnCalories() -> Int
+    func weekAverageBurnCalories() -> Int
+    func getDateRange() -> String
 }
 
 final class BurnCaloriesCalculatorUseCase: BurnCaloriesCalculatorUseCaseProtocol {
@@ -25,7 +27,7 @@ final class BurnCaloriesCalculatorUseCase: BurnCaloriesCalculatorUseCaseProtocol
     }
     
     /// 칼로리 퍼센트 계산
-    func calculateCaloriesPercent(for calories: [BurnCaloriesData]) -> [BurnCaloriesChartData] {
+    private func calculateCaloriesPercent(for calories: [BurnCaloriesData]) -> [BurnCaloriesChartData] {
         
         let caloriesRawValue = calories.map { $0.calories }
         let goalCalories = userData.burnCaloriesGoal
@@ -43,6 +45,30 @@ final class BurnCaloriesCalculatorUseCase: BurnCaloriesCalculatorUseCaseProtocol
         return caloriesUIData
     }
     
+    
+    func todayBurnCalories() -> Int {
+        let list = getBurnCaloriesChartData()
+        
+        let today = list.filter{ $0.isToday }
+    
+        
+        return today.first?.rawValue ?? 0
+    }
+    
+    func weekAverageBurnCalories() -> Int {
+        let list = getBurnCaloriesChartData()
+        let sum = list.reduce(0) { $0 + $1.rawValue }
+        return sum / list.count
+    }
+    
+    func getDateRange() -> String {
+        let list = caloriesRepository.fetchCaloriesThisWeek()
+        let firstDate = list.first?.date ?? Date()
+        let lastDate = list.last?.date ?? Date()
+        
+        return dateManager.formattedDateRange(from: firstDate, to: lastDate)
+        
+    }
     
 }
 

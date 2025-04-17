@@ -14,6 +14,7 @@ final class DateManager {
     
     private let dateFormatter = DateFormatter()
     
+    /// 년, 월, 일 추출
     func getYearAndMonthString(currentDate: Date) -> [String] {
         
         dateFormatter.dateFormat = "YYYY MM dd"
@@ -25,6 +26,7 @@ final class DateManager {
         return yearMonthDay
     }
     
+    ///Date -> String
     func getDateString(date: Date,
                        format: String = "YYYY.MM.dd") -> String {
         dateFormatter.dateFormat = format
@@ -32,6 +34,7 @@ final class DateManager {
         return dateString
     }
     
+    /// String -> Date
     func getDate(from date : String, format: String = "YYYY.MM.dd") -> Date {
         dateFormatter.dateFormat = format
         guard let dateValue = dateFormatter.date(from: date) else {
@@ -41,17 +44,26 @@ final class DateManager {
         return dateValue
     }
     
+    /// Date로 날짜 글자 추출
     func weekdayString(from date: Date,
                        style: WeekdayStyle) -> String {
         dateFormatter.dateFormat = style.format
         return dateFormatter.string(from: date)
     }
     
+    /// 같은 요일 판별
     func isSameWeekday(_ day1: Date, _ day2: Date) -> Bool {
         dateFormatter.dateFormat = WeekdayStyle.full.format
         return dateFormatter.string(from: day1) == dateFormatter.string(from: day2)
     }
    
+    func formattedDateRange(from startDate: Date, to endDate: Date) -> String {
+        dateFormatter.dateFormat = "dd"
+        let startDay = dateFormatter.string(from: startDate)
+        dateFormatter.dateFormat = "dd MMMM yyyy"
+        let endFull = dateFormatter.string(from: endDate)
+        return "\(startDay) - \(endFull)"
+    }
     
 }
 

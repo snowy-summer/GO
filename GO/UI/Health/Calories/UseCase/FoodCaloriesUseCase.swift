@@ -9,7 +9,6 @@ import Foundation
 
 protocol FoodCaloriesUseCaseProtocol {
     func getFoodCaloriesChartData() -> FoodCaloriesChartData
-    func calculateCaloriesPercent(for calories: [FoodCaloriesData]) -> FoodCaloriesChartData
 }
 
 final class FoodCaloriesUseCase: FoodCaloriesUseCaseProtocol {
@@ -26,7 +25,7 @@ final class FoodCaloriesUseCase: FoodCaloriesUseCaseProtocol {
     }
     
     /// 칼로리 퍼센트 계산
-    func calculateCaloriesPercent(for calories: [FoodCaloriesData]) -> FoodCaloriesChartData {
+    private func calculateCaloriesPercent(for calories: [FoodCaloriesData]) -> FoodCaloriesChartData {
         
         let caloriesRawValue = calories.map { $0.calories }
         let totalCalories = caloriesRawValue.reduce(0, +)

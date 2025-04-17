@@ -9,6 +9,7 @@ import Foundation
 
 protocol SleepTimeChartUseCaseProtocol {
     func fetchChartData() -> [SleepTimeChartData]
+    func getDateRange() -> String
 }
 
 final class SleepTimeChartUseCase: SleepTimeChartUseCaseProtocol {
@@ -40,5 +41,14 @@ final class SleepTimeChartUseCase: SleepTimeChartUseCaseProtocol {
         return timeUIData
     }
     
+    /// 차트 기간 가지고오기
+    func getDateRange() -> String {
+        let list = sleepTimeRepository.fetchSleepTimeThisWeek()
+        let firstDate = list.first?.date ?? Date()
+        let lastDate = list.last?.date ?? Date()
+        
+        return dateManager.formattedDateRange(from: firstDate, to: lastDate)
+        
+    }
     
 }
