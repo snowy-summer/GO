@@ -22,7 +22,6 @@ final class WeightCardViewModel: WeightCardViewModelProtocol {
     @Published var recentWeight: Double = 0
     @Published var goalWeight: Double = UserDefaultsManager.shared.weightGoal
     
-    @Published var isAnimating: Bool = false
     var minWeight: Double = 0
     var maxWeight: Double = 0
     
@@ -30,7 +29,6 @@ final class WeightCardViewModel: WeightCardViewModelProtocol {
     
     enum Intent {
         case fetchWeight
-        case animationOn
     }
     
     init(weightChartUseCase: WeightChartUseCaseProtocol = WeightChartUseCase()) {
@@ -43,10 +41,6 @@ final class WeightCardViewModel: WeightCardViewModelProtocol {
             weightList = weightChartUseCase.fetchChartData()
             minWeight = (weightList.map { $0.weight }.min() ?? 0) - 2
             maxWeight = (weightList.map { $0.weight }.max() ?? 0) + 2
-            isAnimating = false
-            
-        case .animationOn:
-            isAnimating = true
         }
     }
     
