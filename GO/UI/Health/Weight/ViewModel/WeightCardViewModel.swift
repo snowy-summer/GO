@@ -41,6 +41,7 @@ final class WeightCardViewModel: WeightCardViewModelProtocol {
             weightList = weightChartUseCase.fetchChartData()
             minWeight = (weightList.map { $0.weight }.min() ?? 0) - 2
             maxWeight = (weightList.map { $0.weight }.max() ?? 0) + 2
+            recentWeight = weightList.last?.weight ?? 0
             duration = weightChartUseCase.getDateRange()
         }
     }
