@@ -9,6 +9,7 @@ import Foundation
 
 protocol WeightChartUseCaseProtocol {
     func fetchChartData() -> [WeightChartData]
+    func getDateRange() -> String
 }
 
 final class WeightChartUseCase: WeightChartUseCaseProtocol {
@@ -16,7 +17,7 @@ final class WeightChartUseCase: WeightChartUseCaseProtocol {
     private let dateManager: DateManager = DateManager.shared
     private let userData: UserDefaultsManager = UserDefaultsManager.shared
     
-        /// 몸무게 데이터 받아오기
+    /// 몸무게 데이터 받아오기
     func fetchChartData() -> [WeightChartData] {
         let weight = WeightRepository.fetchWeightRecentSeven()
         return convertToChartData(for: weight)
@@ -34,6 +35,13 @@ final class WeightChartUseCase: WeightChartUseCaseProtocol {
         return weightList
     }
     
-    
+    func getDateRange() -> String {
+        let list = WeightRepository.fetchWeightRecentSeven()
+        let firstDate = list.first?.date ?? Date()
+        let lastDate = list.last?.date ?? Date()
+        
+        return dateManager.formattedDateRange(from: firstDate, to: lastDate)
+        
+    }
     
 }

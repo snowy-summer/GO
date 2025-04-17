@@ -72,7 +72,7 @@ struct BurnCaloriesCardView: View {
                         
                         
                     }
-                    .frame(width: geometry.size.width * 0.2)
+                    .frame(width: geometry.size.width * 0.25)
                     
                     // 그래프
                     GeometryReader { geometry in

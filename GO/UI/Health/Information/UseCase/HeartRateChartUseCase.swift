@@ -9,6 +9,7 @@ import Foundation
 
 protocol HeartRateChartUseCaseProtocol {
     func fetchChartData() -> [InformationChartData]
+    func getDateRange() -> String
 }
 
 final class HeartRateChartUseCase: HeartRateChartUseCaseProtocol {
@@ -39,6 +40,16 @@ final class HeartRateChartUseCase: HeartRateChartUseCaseProtocol {
         }
         
         return heartRateUIData
+    }
+    
+    /// 차트 기간 가지고오기
+    func getDateRange() -> String {
+        let list = heartRateRepository.fetchHeartRateThisWeek()
+        let firstDate = list.first?.date ?? Date()
+        let lastDate = list.last?.date ?? Date()
+        
+        return dateManager.formattedDateRange(from: firstDate, to: lastDate)
+        
     }
     
     

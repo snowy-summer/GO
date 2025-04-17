@@ -28,7 +28,7 @@ final class InformationCardViewModel: InformationCardViewModelProtocol {
     @Published var stepsChartDataList: [InformationChartData] = []
     @Published var waterChartDataList: [WaterChartData] = []
     
-    @Published var duration: String = "13 - 19 April 2025"
+    @Published var duration: String = ""
     
     @Published var todayHeartRate: Int = 0
     @Published var todaySleepTime: Time = Time(hour: 0, minute: 0)
@@ -97,6 +97,7 @@ final class InformationCardViewModel: InformationCardViewModelProtocol {
             case .water:
                 selectedInformationCard = .water
             }
+            getDateRange()
             isAnimating = false
             
         case .animationOn:
@@ -109,15 +110,28 @@ final class InformationCardViewModel: InformationCardViewModelProtocol {
 extension InformationCardViewModel {
     
     /// 오늘 데이터의  rawValue만 추출하는 공통 함수
-    func extractTodayValue<T>(from list: [T]) -> T.RawValue where T: HasTodayValue {
+    private func extractTodayValue<T>(from list: [T]) -> T.RawValue where T: HasTodayValue {
         return list.first(where: { $0.isToday })?.rawValue ?? T.zeroValue
     }
     
-    func todayValue() {
+    private func todayValue() {
         todayHeartRate = extractTodayValue(from: heartRateChartDataList)
         todaySleepTime = extractTodayValue(from: sleepTimeChartDataList)
         todaySteps = extractTodayValue(from: stepsChartDataList)
         todayWater = extractTodayValue(from: waterChartDataList)
+    }
+    
+    private func getDateRange() {
+        switch selectedInformationCard {
+        case .heartRate:
+            duration = heartRateChartUseCase.getDateRange()
+        case .sleepTime:
+            duration = sleepTimeChartUseCase.getDateRange()
+        case .steps:
+            duration = stepsChartUseCase.getDateRange()
+        case .water:
+            duration = waterChartUseCase.getDateRange()
+        }
     }
     
 }

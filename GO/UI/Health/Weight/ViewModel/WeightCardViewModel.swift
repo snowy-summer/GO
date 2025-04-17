@@ -17,7 +17,7 @@ protocol WeightCardViewModelProtocol: ViewModelAble {
 final class WeightCardViewModel: WeightCardViewModelProtocol {
     
     @Published var weightList: [WeightChartData] = []
-    @Published var duration: String = "13 - 19 April 2025"
+    @Published var duration: String = ""
     
     @Published var recentWeight: Double = 0
     @Published var goalWeight: Double = UserDefaultsManager.shared.weightGoal
@@ -41,6 +41,8 @@ final class WeightCardViewModel: WeightCardViewModelProtocol {
             weightList = weightChartUseCase.fetchChartData()
             minWeight = (weightList.map { $0.weight }.min() ?? 0) - 2
             maxWeight = (weightList.map { $0.weight }.max() ?? 0) + 2
+            recentWeight = weightList.last?.weight ?? 0
+            duration = weightChartUseCase.getDateRange()
         }
     }
     
