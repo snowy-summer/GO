@@ -1,14 +1,14 @@
 //
-//  WeightCardView.swift
+//  MuscleMessChartView.swift
 //  GO
 //
-//  Created by 최승범 on 4/17/25.
+//  Created by 최승범 on 4/18/25.
 //
 
 import SwiftUI
 import Charts
 
-struct WeightCardView: View {
+struct MuscleMessChartView: View {
     
     @StateObject private var viewModel = WeightCardViewModel()
     
@@ -21,7 +21,7 @@ struct WeightCardView: View {
                         .resizable()
                         .foregroundStyle(.black)
                         .frame(width: 17, height: 23)
-                    Text("Weight")
+                    Text("Muscle Mess Graph")
                         .appFont(.listTitleBold20)
                     
                     Text(viewModel.duration)
@@ -128,5 +128,5 @@ struct WeightCardView: View {
 }
 
 #Preview {
-    WeightCardView()
+    MuscleMessChartView()
 }
