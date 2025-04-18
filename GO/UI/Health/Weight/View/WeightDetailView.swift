@@ -55,7 +55,7 @@ struct WeightDetailView: View {
                         isExpanded: $isExpanded,
                         content: {
                             VStack(alignment: .leading, spacing: 8) {
-                                MuscleMessChartView()
+                                MuscleMassChartView()
                                     .frame(maxWidth: .infinity)
                                     .frame(height: geometry.size.height * 0.3)
                                 

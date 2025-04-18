@@ -30,8 +30,8 @@ final class WeightChartUseCase: WeightChartUseCaseProtocol {
         
         for data in weight {
             let chartData = WeightChartData(weight: data.weight,
-                                            muscleMess: data.muscleMess,
-                                            bodyFatMess: data.bodyFatMess,
+                                            muscleMass: data.muscleMass,
+                                            bodyFatMass: data.bodyFatMass,
                                             date: dateManager.getDateString(date: data.date, format: "yy.MM.dd"))
             weightList.append(chartData)
         }

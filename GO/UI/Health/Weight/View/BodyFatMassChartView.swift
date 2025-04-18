@@ -1,5 +1,5 @@
 //
-//  MuscleMessChartView.swift
+//  BodyFatMassChartView.swift
 //  GO
 //
 //  Created by 최승범 on 4/18/25.
@@ -8,9 +8,9 @@
 import SwiftUI
 import Charts
 
-struct MuscleMessChartView: View {
+struct BodyFatMassChartView: View {
     
-    @StateObject private var viewModel = MuscleMessChartViewModel()
+    @StateObject private var viewModel = MuscleMassChartViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +21,7 @@ struct MuscleMessChartView: View {
                         .resizable()
                         .foregroundStyle(.black)
                         .frame(width: 17, height: 23)
-                    Text("Muscle Mess Graph")
+                    Text("Body fat mass Graph")
                         .appFont(.listTitleBold20)
                     
                     Text(viewModel.duration)
@@ -45,7 +45,7 @@ struct MuscleMessChartView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.recentMuscleMess, specifier: "%.1f")")
+                                Text("\(viewModel.recentMuscleMass, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -62,7 +62,7 @@ struct MuscleMessChartView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.goalMuscleMess, specifier: "%.1f")")
+                                Text("\(viewModel.goalMuscleMass, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -79,7 +79,7 @@ struct MuscleMessChartView: View {
                     Chart(viewModel.weightList) { record in
                         LineMark(
                             x: .value("day", record.date),
-                            y: .value("weight", record.muscleMess)
+                            y: .value("weight", record.muscleMass)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(.weight)
@@ -99,11 +99,11 @@ struct MuscleMessChartView: View {
                                        .foregroundColor(.gray)
                         })
                         
-                        RuleMark(y: .value("Goal", viewModel.goalMuscleMess))
+                        RuleMark(y: .value("Goal", viewModel.goalMuscleMass))
                                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
                                 .foregroundStyle(.green)
                                 .annotation(position: .top, alignment: .leading) {
-                                    Text("🎯 Goal: \(viewModel.goalMuscleMess, specifier: "%.1f") kg")
+                                    Text("🎯 Goal: \(viewModel.goalMuscleMass, specifier: "%.1f") kg")
                                         .appFont(.tagSemiBold12)
                                         .foregroundColor(.gray)
                                 }
@@ -122,11 +122,11 @@ struct MuscleMessChartView: View {
             
         }
         .onAppear {
-            viewModel.action(.fetchMuscleMess)
+            viewModel.action(.fetchMuscleMass)
         }
     }
 }
 
 #Preview {
-    MuscleMessChartView()
+    BodyFatMassChartView()
 }
