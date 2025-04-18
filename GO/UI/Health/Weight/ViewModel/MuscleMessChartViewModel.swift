@@ -24,24 +24,24 @@ final class MuscleMessChartViewModel: MuscleMessChartViewModelProtocol {
     var maxWeight: Double = 0
     
     
-    private let weightChartUseCase: WeightChartUseCaseProtocol
+    private let muscleMessChartUseCase: MuscleMessChartUseCaseProtocol
     
     enum Intent {
-        case fetchWeight
+        case fetchMuscleMess
     }
     
-    init(weightChartUseCase: WeightChartUseCaseProtocol = WeightChartUseCase()) {
-        self.weightChartUseCase = weightChartUseCase
+    init(muscleMessChartUseCase: MuscleMessChartUseCaseProtocol = MuscleMessChartUseCase()) {
+        self.muscleMessChartUseCase = muscleMessChartUseCase
     }
     
     func action(_ intent: Intent) {
         switch intent {
-        case .fetchWeight:
-            weightList = weightChartUseCase.fetchChartData()
-            minWeight = (weightList.map { $0.weight }.min() ?? 0) - 2
-            maxWeight = (weightList.map { $0.weight }.max() ?? 0) + 2
-            recentWeight = weightList.last?.weight ?? 0
-            duration = weightChartUseCase.getDateRange()
+        case .fetchMuscleMess:
+            weightList = muscleMessChartUseCase.fetchChartData()
+            minWeight = (weightList.map { $0.muscleMess }.min() ?? 0) - 2
+            maxWeight = (weightList.map { $0.muscleMess }.max() ?? 0) + 2
+            recentMuscleMess = weightList.last?.muscleMess ?? 0
+            duration = muscleMessChartUseCase.getDateRange()
         }
     }
     

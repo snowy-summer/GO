@@ -10,7 +10,7 @@ import Charts
 
 struct MuscleMessChartView: View {
     
-    @StateObject private var viewModel = WeightCardViewModel()
+    @StateObject private var viewModel = MuscleMessChartViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -45,7 +45,7 @@ struct MuscleMessChartView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.recentWeight, specifier: "%.1f")")
+                                Text("\(viewModel.recentMuscleMess, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -62,7 +62,7 @@ struct MuscleMessChartView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.goalWeight, specifier: "%.1f")")
+                                Text("\(viewModel.goalMuscleMess, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -79,14 +79,14 @@ struct MuscleMessChartView: View {
                     Chart(viewModel.weightList) { record in
                         LineMark(
                             x: .value("day", record.date),
-                            y: .value("weight", record.weight)
+                            y: .value("weight", record.muscleMess)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(.weight)
                         
                         PointMark(
                             x: .value("day", record.date),
-                            y: .value("weight", record.weight)
+                            y: .value("weight", record.muscleMess)
                         )
                         .symbolSize(maxBarHeight * 0.5)
                         .foregroundStyle(.weight)
@@ -94,16 +94,16 @@ struct MuscleMessChartView: View {
                                     alignment: .center,
                                     spacing: 8,
                                     content: {
-                            Text("\(record.weight, specifier: "%.1f")")
+                            Text("\(record.muscleMess, specifier: "%.1f")")
                                 .appFont(.tagSemiBold12)
                                        .foregroundColor(.gray)
                         })
                         
-                        RuleMark(y: .value("Goal", viewModel.goalWeight))
+                        RuleMark(y: .value("Goal", viewModel.goalMuscleMess))
                                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
                                 .foregroundStyle(.green)
                                 .annotation(position: .top, alignment: .leading) {
-                                    Text("🎯 Goal: \(viewModel.goalWeight, specifier: "%.1f") kg")
+                                    Text("🎯 Goal: \(viewModel.goalMuscleMess, specifier: "%.1f") kg")
                                         .appFont(.tagSemiBold12)
                                         .foregroundColor(.gray)
                                 }
@@ -122,7 +122,7 @@ struct MuscleMessChartView: View {
             
         }
         .onAppear {
-            viewModel.action(.fetchWeight)
+            viewModel.action(.fetchMuscleMess)
         }
     }
 }
