@@ -10,5 +10,7 @@ import Foundation
 struct WeightChartData: Identifiable {
     let id = UUID()
     let weight: Double
+    let muscleMess: Double
+    let bodyFatMess: Double
     let date: String
 }
