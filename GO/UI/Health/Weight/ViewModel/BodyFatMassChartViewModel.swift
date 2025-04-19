@@ -20,28 +20,29 @@ final class BodyFatMassChartViewModel: BodyFatMassChartViewModelProtocol {
     @Published var recentBodyFatMass: Double = 0
     @Published var recentBodyFatMassPercent: Double = 0
     
-    var minWeight: Double = 0
-    var maxWeight: Double = 0
+    var minBodyFat: Double = 0
+    var maxBodyFat: Double = 0
     
     
-    private let muscleMessChartUseCase: MuscleMessChartUseCaseProtocol
+    private let bodyFatMassChartUseCase: BodyFatMassChartUseCaseProtocol
     
     enum Intent {
         case fetchBodyFatMass
     }
     
-    init(muscleMessChartUseCase: MuscleMessChartUseCaseProtocol = MuscleMessChartUseCase()) {
-        self.muscleMessChartUseCase = muscleMessChartUseCase
+    init(bodyFatMassChartUseCase: BodyFatMassChartUseCaseProtocol = BodyFatMassChartUseCase()) {
+        self.bodyFatMassChartUseCase = bodyFatMassChartUseCase
     }
     
     func action(_ intent: Intent) {
         switch intent {
         case .fetchBodyFatMass:
-            weightList = muscleMessChartUseCase.fetchChartData()
-            minWeight = (weightList.map { $0.muscleMass }.min() ?? 0) - 2
-            maxWeight = (weightList.map { $0.muscleMass }.max() ?? 0) + 2
+            weightList = bodyFatMassChartUseCase.fetchChartData()
+            minBodyFat = (weightList.map { $0.bodyFatMass }.min() ?? 0) - 2
+            maxBodyFat = (weightList.map { $0.bodyFatMass }.max() ?? 0) + 2
             recentBodyFatMass = weightList.last?.bodyFatMass ?? 0
-            duration = muscleMessChartUseCase.getDateRange()
+            recentBodyFatMassPercent = bodyFatMassChartUseCase.getRecentBodyFatMassPercent(from: weightList)
+            duration = bodyFatMassChartUseCase.getDateRange()
         }
     }
     

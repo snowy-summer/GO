@@ -59,10 +59,7 @@ struct WeightDetailView: View {
                                     .frame(maxWidth: .infinity)
                                     .frame(height: geometry.size.height * 0.3)
                                 
-                                Text("체지방량 그래프 🔴")
-                                    .font(.subheadline)
-                                
-                                WeightChartCardView()
+                                BodyFatMassChartView()
                                     .frame(maxWidth: .infinity)
                                     .frame(height: geometry.size.height * 0.3)
                             }
@@ -70,13 +67,15 @@ struct WeightDetailView: View {
                         },
                         label: {
                             HStack {
-                                Text("체성분 보기")
-                                    .font(.headline)
+                                Text("체성분")
+                                    .appFont(.titleBold24)
+                                
                                 Spacer()
                             }
                         }
                     )
                     .padding()
+                    .tint(.black)
                     .background(Color.gray.opacity(0.1))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 }

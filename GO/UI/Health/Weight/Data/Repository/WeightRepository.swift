@@ -8,7 +8,7 @@
 import Foundation
 
 protocol WeightRepositoryProtocol {
-    func fetchWeightRecentSeven() -> [WeightData]
+    func fetchWeightRecentSeven() -> [WeightData] // 날짜 순으로 내보내야함
 }
 
 final class MockWeightRepository: WeightRepositoryProtocol {

@@ -10,7 +10,7 @@ import Charts
 
 struct BodyFatMassChartView: View {
     
-    @StateObject private var viewModel = MuscleMassChartViewModel()
+    @StateObject private var viewModel = BodyFatMassChartViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +21,7 @@ struct BodyFatMassChartView: View {
                         .resizable()
                         .foregroundStyle(.black)
                         .frame(width: 17, height: 23)
-                    Text("Body fat mass Graph")
+                    Text("Body fat Mass")
                         .appFont(.listTitleBold20)
                     
                     Text(viewModel.duration)
@@ -45,7 +45,7 @@ struct BodyFatMassChartView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.bodyFatMass, specifier: "%.1f")")
+                                Text("\(viewModel.recentBodyFatMass, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -55,16 +55,16 @@ struct BodyFatMassChartView: View {
                         
                         VStack {
                             HStack {
-                                Text("Goal")
+                                Text("Percent")
                                     .appFont(.subHeadLineMedium15)
                                 Spacer()
                             }
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.goalMuscleMass, specifier: "%.1f")")
+                                Text("\(viewModel.recentBodyFatMassPercent, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
-                                Text("kg")
+                                Text("%")
                                     .appFont(.tagSemiBold12)
                             }
                             .padding(.horizontal)
@@ -94,22 +94,13 @@ struct BodyFatMassChartView: View {
                                     alignment: .center,
                                     spacing: 8,
                                     content: {
-                            Text("\(record.muscleMess, specifier: "%.1f")")
+                            Text("\(record.muscleMass, specifier: "%.1f")")
                                 .appFont(.tagSemiBold12)
                                        .foregroundColor(.gray)
                         })
-                        
-                        RuleMark(y: .value("Goal", viewModel.goalMuscleMass))
-                                .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
-                                .foregroundStyle(.green)
-                                .annotation(position: .top, alignment: .leading) {
-                                    Text("🎯 Goal: \(viewModel.goalMuscleMass, specifier: "%.1f") kg")
-                                        .appFont(.tagSemiBold12)
-                                        .foregroundColor(.gray)
-                                }
                        
                     }
-                    .chartYScale(domain: viewModel.minWeight...viewModel.maxWeight)
+                    .chartYScale(domain: viewModel.minBodyFat...viewModel.maxBodyFat)
                     
                     .frame(maxHeight: .infinity)
                     .frame(maxWidth: .infinity)
@@ -122,7 +113,7 @@ struct BodyFatMassChartView: View {
             
         }
         .onAppear {
-            viewModel.action(.fetchMuscleMass)
+            viewModel.action(.fetchBodyFatMass)
         }
     }
 }

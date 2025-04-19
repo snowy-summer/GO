@@ -21,7 +21,7 @@ struct MuscleMassChartView: View {
                         .resizable()
                         .foregroundStyle(.black)
                         .frame(width: 17, height: 23)
-                    Text("Muscle Mess Graph")
+                    Text("Muscle Mass")
                         .appFont(.listTitleBold20)
                     
                     Text(viewModel.duration)
