@@ -16,25 +16,25 @@ struct WeightDetailView: View {
             let width = geometry.size.width
             let height = geometry.size.height
             ScrollView {
-                
-                BodyStateView(width: width,
-                              height: height,
-                              viewModel: viewModel)
+                VStack(spacing: 20) {
+                    BodyStateView(width: width,
+                                  height: height,
+                                  viewModel: viewModel)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .padding()
-                
-                BodyCompositionView(height: height,
-                                    isExpanded: $viewModel.isExpanded)
+                    
+                    BodyCompositionView(height: height,
+                                        isExpanded: $viewModel.isExpanded)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .padding()
-                
-                ProgressPhotosView(width: width)
-                    .background(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .padding()
+                    
+                    ProgressPhotosView(width: width)
+                        .background(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    
+                }
             }
+            .padding(.horizontal, 20)
         }
     }
     
