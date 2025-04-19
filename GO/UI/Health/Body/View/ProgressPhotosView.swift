@@ -11,7 +11,7 @@ struct ProgressPhotosView: View {
     let width: CGFloat
     
     @StateObject var viewModel: ProgressPhotosViewModel = ProgressPhotosViewModel()
-
+    
     var body: some View {
         VStack {
             header
@@ -23,20 +23,30 @@ struct ProgressPhotosView: View {
         }
         .padding()
     }
-
+    
     private var header: some View {
         HStack {
             Text("Progress Photos")
                 .appFont(.sectionTitleBold28)
             Spacer()
-            Button("Album") {
-                // 앨범 열기
+            NavigationLink {
+                ProgressPhotosAlbumView(width: width, photos: viewModel.photos)
+                
+            } label: {
+                Text("Album")
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
             }
-            .buttonStyle(.borderedProminent)
+            
         }
         .padding(.horizontal)
+        
+        
     }
-
+    
     private var dateNavigator: some View {
         HStack {
             Button {
@@ -45,10 +55,10 @@ struct ProgressPhotosView: View {
                 Image(systemName: "chevron.backward")
                     .foregroundStyle(.black)
             }
-
+            
             Text(viewModel.day)
                 .appFont(.listTitleBold20)
-
+            
             Button {
                 viewModel.action(.nextPage)
             } label: {
@@ -58,12 +68,12 @@ struct ProgressPhotosView: View {
         }
         .padding()
     }
-
+    
     private var photoScrollView: some View {
         TabView(selection: $viewModel.selectedIndex) {
             ForEach(viewModel.photos.indices, id: \.self) { index in
                 let photo = viewModel.photos[index]
-
+                
                 HStack(spacing: 20) {
                     photoSlot(viewModel.firstPhoto, label: "start")
                     photoSlot(photo.frontProgressPhoto, label: "Front")
@@ -77,7 +87,7 @@ struct ProgressPhotosView: View {
         .frame(height: width * 0.35)
         .animation(.easeInOut, value: viewModel.selectedIndex)
     }
-
+    
     private func photoSlot(_ image: Image?,
                            label: String) -> some View {
         VStack {
@@ -92,7 +102,7 @@ struct ProgressPhotosView: View {
                     .fill(Color.gray.opacity(0.2))
                     .frame(maxWidth: width * 0.2, maxHeight: width * 0.3)
             }
-
+            
             Text(label)
                 .appFont(.bodySmallRegular14)
         }
@@ -100,5 +110,6 @@ struct ProgressPhotosView: View {
 }
 
 #Preview {
-    ProgressPhotosView(width: 740)
+//    ProgressPhotosView(width: 740)
+    HealthView()
 }

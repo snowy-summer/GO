@@ -67,17 +67,23 @@ struct HealthView: View {
                     .listStyle(.plain)
                     .frame(width: 200)
                     .frame(maxHeight: .infinity)
-                    
-                    switch viewModel.showedViewType {
-                    case .dashboard:
-                        HealthDashboardView()
-                    case .information:
-                        WeightDetailView()
-                    case .calories:
-                        HealthDashboardView()
-                    case .workouts:
-                        WeightDetailView()
+                    NavigationStack {
+                        switch viewModel.showedViewType {
+                        case .dashboard:
+                            HealthDashboardView()
+                                .background(.back)
+                        case .information:
+                            WeightDetailView()
+                                .background(.back)
+                        case .calories:
+                            HealthDashboardView()
+                                .background(.back)
+                        case .workouts:
+                            WeightDetailView()
+                                .background(.back)
+                        }
                     }
+                    
                 }
             }
         }

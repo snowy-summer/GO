@@ -18,6 +18,7 @@ final class ProgressPhotosViewModel: ProgressPhotosViewModelProtocol {
     
     @Published var photos: [ProgressPhotosUIData] = []
     @Published var selectedIndex: Int = 0
+    @Published var isAlbumPresented: Bool = false
     var firstPhoto: Image? {
         photos.first?.frontProgressPhoto
     }
@@ -33,6 +34,7 @@ final class ProgressPhotosViewModel: ProgressPhotosViewModelProtocol {
         case changeIndex(Int)
         case nextPage
         case previousPage
+        case showAlbum
     }
     
     init(progressPhotosUseCase: ProgressPhotosUseCaseProtocol = ProgressPhotosUseCase()) {
@@ -53,6 +55,9 @@ final class ProgressPhotosViewModel: ProgressPhotosViewModelProtocol {
             
         case .previousPage:
             selectedIndex = max(selectedIndex - 1, 0)
+            
+        case .showAlbum:
+            isAlbumPresented = true
         }
     }
 }
