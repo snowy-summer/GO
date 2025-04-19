@@ -45,7 +45,7 @@ struct BodyFatMassChartView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.recentMuscleMass, specifier: "%.1f")")
+                                Text("\(viewModel.bodyFatMass, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -79,14 +79,14 @@ struct BodyFatMassChartView: View {
                     Chart(viewModel.weightList) { record in
                         LineMark(
                             x: .value("day", record.date),
-                            y: .value("weight", record.muscleMass)
+                            y: .value("weight", record.bodyFatMass)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(.weight)
                         
                         PointMark(
                             x: .value("day", record.date),
-                            y: .value("weight", record.muscleMess)
+                            y: .value("weight", record.bodyFatMass)
                         )
                         .symbolSize(maxBarHeight * 0.5)
                         .foregroundStyle(.weight)

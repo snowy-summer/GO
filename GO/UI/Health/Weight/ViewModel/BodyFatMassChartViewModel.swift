@@ -1,29 +1,24 @@
 //
-//  MuscleMassChartViewModel.swift
+//  BodyFatMassChartViewModel.swift
 //  GO
 //
-//  Created by 최승범 on 4/18/25.
+//  Created by 최승범 on 4/19/25.
 //
 
 import Foundation
 
-protocol MuscleMassChartViewModelProtocol: ViewModelAble {
-    var weightList: [WeightChartData] { get }
-    var duration: String { get }
-    var recentMuscleMass: Double { get }
-    var goalMuscleMass: Double { get }
-    var minWeight: Double { get }
-    var maxWeight: Double { get }
+protocol BodyFatMassChartViewModelProtocol: ViewModelAble {
+    
 }
 
 
-final class MuscleMassChartViewModel: MuscleMassChartViewModelProtocol {
+final class BodyFatMassChartViewModel: BodyFatMassChartViewModelProtocol {
     
     @Published var weightList: [WeightChartData] = []
     @Published var duration: String = ""
     
-    @Published var recentMuscleMass: Double = 0
-    @Published var goalMuscleMass: Double = UserDefaultsManager.shared.weightGoal
+    @Published var recentBodyFatMass: Double = 0
+    @Published var recentBodyFatMassPercent: Double = 0
     
     var minWeight: Double = 0
     var maxWeight: Double = 0
@@ -32,7 +27,7 @@ final class MuscleMassChartViewModel: MuscleMassChartViewModelProtocol {
     private let muscleMessChartUseCase: MuscleMessChartUseCaseProtocol
     
     enum Intent {
-        case fetchMuscleMass
+        case fetchBodyFatMass
     }
     
     init(muscleMessChartUseCase: MuscleMessChartUseCaseProtocol = MuscleMessChartUseCase()) {
@@ -41,11 +36,11 @@ final class MuscleMassChartViewModel: MuscleMassChartViewModelProtocol {
     
     func action(_ intent: Intent) {
         switch intent {
-        case .fetchMuscleMass:
+        case .fetchBodyFatMass:
             weightList = muscleMessChartUseCase.fetchChartData()
             minWeight = (weightList.map { $0.muscleMass }.min() ?? 0) - 2
             maxWeight = (weightList.map { $0.muscleMass }.max() ?? 0) + 2
-            recentMuscleMass = weightList.last?.muscleMass ?? 0
+            recentBodyFatMass = weightList.last?.bodyFatMass ?? 0
             duration = muscleMessChartUseCase.getDateRange()
         }
     }
