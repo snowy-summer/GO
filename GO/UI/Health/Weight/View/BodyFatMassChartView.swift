@@ -38,7 +38,7 @@ struct BodyFatMassChartView: View {
                     VStack(spacing: 20) {
                         VStack {
                             HStack {
-                                Text("Recent")
+                                Text("Fat Mass")
                                     .appFont(.subHeadLineMedium15)
                                 Spacer()
                             }
@@ -55,7 +55,7 @@ struct BodyFatMassChartView: View {
                         
                         VStack {
                             HStack {
-                                Text("Percent")
+                                Text("Fat Percent")
                                     .appFont(.subHeadLineMedium15)
                                 Spacer()
                             }

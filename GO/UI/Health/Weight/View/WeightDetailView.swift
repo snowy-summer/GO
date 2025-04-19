@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WeightDetailView: View {
     
-    @State private var isExpanded: Bool = false
+    @StateObject private var viewModel: WeightDetailViewModel = WeightDetailViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -18,12 +18,14 @@ struct WeightDetailView: View {
             ScrollView {
                 
                 BodyStateView(width: width,
-                              height: height)
+                              height: height,
+                              viewModel: viewModel)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .padding()
                 
-                BodyCompositionView(height: height, isExpanded: $isExpanded)
+                BodyCompositionView(height: height,
+                                    isExpanded: $viewModel.isExpanded)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .padding()
@@ -39,6 +41,7 @@ struct WeightDetailView: View {
     private struct BodyStateView: View {
         let width: CGFloat
         let height: CGFloat
+        @ObservedObject var viewModel: WeightDetailViewModel
         
         var body: some View {
             VStack {
@@ -55,7 +58,7 @@ struct WeightDetailView: View {
                                 .appFont(.sectionTitleBold28)
                             Spacer()
                             
-                            Text("2025.04.15")
+                            Text(viewModel.day)
                                 .appFont(.emphasisSemiBold16)
                                 .foregroundStyle(.gray)
                         }
@@ -65,22 +68,22 @@ struct WeightDetailView: View {
                             BodyComponentCardView(
                                 width: width,
                                 title: "Weight (kg)",
-                                value: "71.3",
-                                bodyState: .over
+                                value: viewModel.recentWeight,
+                                bodyState: viewModel.recentWeightState
                             )
                             
                             BodyComponentCardView(
                                 width: width,
                                 title: "Muscle (kg)",
-                                value: "34.0",
-                                bodyState: .normal
+                                value: viewModel.recentMuscleMass,
+                                bodyState: viewModel.recentMuscleMassState
                             )
                             
                             BodyComponentCardView(
                                 width: width,
                                 title: "Fat (%)",
-                                value: "24.0",
-                                bodyState: .over
+                                value: viewModel.recentBodyFatPercent,
+                                bodyState: viewModel.recentBodyFatState
                             )
                             
                             VStack {
@@ -115,13 +118,16 @@ struct WeightDetailView: View {
                     .frame(height: height * 0.5)
             }
             .padding()
+            .onAppear {
+                viewModel.action(.fetchData)
+            }
         }
     }
     
     private struct BodyComponentCardView: View {
         let width: CGFloat
         let title: String          // 예: "Muscle (kg)"
-        let value: String          // 예: "34.0"
+        let value: Double          // 예: "34.0"
         let bodyState: BodyState  //예: .normal
 
         var body: some View {
@@ -130,7 +136,7 @@ struct WeightDetailView: View {
                     .appFont(.emphasisSemiBold16)
                     .foregroundStyle(.gray)
 
-                Text(value)
+                Text("\(value, specifier: "%.1f")")
                     .appFont(.sectionTitleBold28)
 
                 Text(bodyState.title)
@@ -185,82 +191,6 @@ struct WeightDetailView: View {
         }
     }
     
-    private struct ProgressPhotosView: View {
-        
-        let width: CGFloat
-        
-        var body: some View {
-            VStack {
-                HStack {
-                    Text("Progress Photos")
-                        .appFont(.sectionTitleBold28)
-                    Spacer()
-                    Button {
-                        
-                    } label: {
-                        Text("Album")
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
-                .padding()
-                
-                HStack {
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .foregroundStyle(.black)
-                    }
-                    .padding()
-                    
-                    Text("25.04.15")
-                        .appFont(.listTitleBold20)
-                        .bold()
-                    
-                    Button {
-                    } label: {
-                        Image(systemName: "chevron.forward")
-                            .foregroundStyle(.black)
-                    }
-                    .padding()
-                }
-                
-                HStack(spacing: 20) {
-                    VStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .frame(maxWidth: width * 0.2)
-                            .frame(height: width * 0.3)
-                        Text("Start")
-                            .appFont(.bodySmallRegular14)
-                    }
-                    VStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .frame(maxWidth: width * 0.2)
-                            .frame(height: width * 0.3)
-                        Text("Front")
-                            .appFont(.bodySmallRegular14)
-                    }
-                    
-                    VStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .frame(maxWidth: width * 0.2)
-                            .frame(height: width * 0.3)
-                        Text("Side")
-                            .appFont(.bodySmallRegular14)
-                    }
-                    VStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .frame(maxWidth: width * 0.2)
-                            .frame(height: width * 0.3)
-                        Text("Pose")
-                            .appFont(.bodySmallRegular14)
-                    }
-                }
-            }
-            .padding()
-        }
-    }
-    
 }
 //
 //#Preview {
@@ -276,34 +206,6 @@ struct WeightDetailView_previews: PreviewProvider {
             HealthView()
                 .previewDevice(PreviewDevice(rawValue: device)) // 프리뷰 디바이스 설정
                 .previewDisplayName(device) // 프리뷰 이름 설정
-        }
-    }
-}
-
-enum BodyState: CaseIterable {
-    case over
-    case normal
-    case under
-    
-    var color: Color {
-        switch self {
-        case .over:
-            return .over
-        case .normal:
-            return .normal
-        case .under:
-            return .yellow
-        }
-    }
-    
-    var title: String {
-        switch self {
-        case .over:
-            return "Over"
-        case .normal:
-            return "Normal"
-        case .under:
-            return "Under"
         }
     }
 }
