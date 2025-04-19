@@ -31,4 +31,10 @@ final class UserDefaultsManager {
     
     @UserDefault(key: "weightGoal", defaultValue: 70)
     var weightGoal: Double
+    
+    @UserDefault(key: "userHeight", defaultValue: 170)
+    var userHeight: Double
+    
+    @UserDefault(key: "gender", defaultValue: "male")
+    var gender: String
 }
