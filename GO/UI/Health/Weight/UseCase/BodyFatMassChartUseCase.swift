@@ -1,29 +1,30 @@
 //
-//  WeightChartUseCase.swift
+//  BodyFatMassChartUseCase.swift
 //  GO
 //
-//  Created by 최승범 on 4/17/25.
+//  Created by 최승범 on 4/19/25.
 //
 
 import Foundation
 
-protocol WeightChartUseCaseProtocol {
+protocol BodyFatMassChartUseCaseProtocol {
     func fetchChartData() -> [WeightChartData]
     func getDateRange() -> String
+    func getRecentBodyFatMassPercent(from dataList:[WeightChartData]) -> Double 
 }
 
-final class WeightChartUseCase: WeightChartUseCaseProtocol {
+final class BodyFatMassChartUseCase: BodyFatMassChartUseCaseProtocol {
     private let WeightRepository: WeightRepositoryProtocol = MockWeightRepository()
     private let dateManager: DateManager = DateManager.shared
     private let userData: UserDefaultsManager = UserDefaultsManager.shared
     
-    /// 몸무게 데이터 받아오기
+    /// 골격근량 데이터 받아오기
     func fetchChartData() -> [WeightChartData] {
         let weight = WeightRepository.fetchWeightRecentSeven()
         return convertToChartData(for: weight)
     }
     
-    /// 몸무게 변환
+    /// 차트 데이터 변환
     private func convertToChartData(for weight: [WeightData]) -> [WeightChartData] {
         
         var weightList: [WeightChartData] = []
@@ -35,6 +36,8 @@ final class WeightChartUseCase: WeightChartUseCaseProtocol {
                                             date: dateManager.getDateString(date: data.date, format: "yy.MM.dd"))
             weightList.append(chartData)
         }
+        
+        
         return weightList
     }
     
@@ -45,6 +48,16 @@ final class WeightChartUseCase: WeightChartUseCaseProtocol {
         
         return dateManager.formattedDateRange(from: firstDate, to: lastDate)
         
+    }
+    
+    func getRecentBodyFatMassPercent(from dataList:[WeightChartData]) -> Double {
+        guard let bodyFatMass = dataList.last?.bodyFatMass,
+              let weight = dataList.last?.weight else {
+            LogManager.log("WeightChart데이터에 값이 존재하지 않습니다")
+            return 0.0
+        }
+        
+        return bodyFatMass / weight * 100
     }
     
 }

@@ -1,16 +1,16 @@
 //
-//  WeightCardView.swift
+//  BodyFatMassChartView.swift
 //  GO
 //
-//  Created by 최승범 on 4/17/25.
+//  Created by 최승범 on 4/18/25.
 //
 
 import SwiftUI
 import Charts
 
-struct WeightCardView: View {
+struct BodyFatMassChartView: View {
     
-    @StateObject private var viewModel = WeightCardViewModel()
+    @StateObject private var viewModel = BodyFatMassChartViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +21,7 @@ struct WeightCardView: View {
                         .resizable()
                         .foregroundStyle(.black)
                         .frame(width: 17, height: 23)
-                    Text("Weight")
+                    Text("Body fat Mass")
                         .appFont(.listTitleBold20)
                     
                     Text(viewModel.duration)
@@ -45,7 +45,7 @@ struct WeightCardView: View {
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.recentWeight, specifier: "%.1f")")
+                                Text("\(viewModel.recentBodyFatMass, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
                                 Text("kg")
                                     .appFont(.tagSemiBold12)
@@ -55,16 +55,16 @@ struct WeightCardView: View {
                         
                         VStack {
                             HStack {
-                                Text("Goal")
+                                Text("Percent")
                                     .appFont(.subHeadLineMedium15)
                                 Spacer()
                             }
                             .padding(.leading, 20)
                             HStack {
                                 Spacer()
-                                Text("\(viewModel.goalWeight, specifier: "%.1f")")
+                                Text("\(viewModel.recentBodyFatMassPercent, specifier: "%.1f")")
                                     .appFont(.listTitleBold20)
-                                Text("kg")
+                                Text("%")
                                     .appFont(.tagSemiBold12)
                             }
                             .padding(.horizontal)
@@ -79,14 +79,14 @@ struct WeightCardView: View {
                     Chart(viewModel.weightList) { record in
                         LineMark(
                             x: .value("day", record.date),
-                            y: .value("weight", record.weight)
+                            y: .value("weight", record.bodyFatMass)
                         )
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(.weight)
                         
                         PointMark(
                             x: .value("day", record.date),
-                            y: .value("weight", record.weight)
+                            y: .value("weight", record.bodyFatMass)
                         )
                         .symbolSize(maxBarHeight * 0.5)
                         .foregroundStyle(.weight)
@@ -94,22 +94,13 @@ struct WeightCardView: View {
                                     alignment: .center,
                                     spacing: 8,
                                     content: {
-                            Text("\(record.weight, specifier: "%.1f")")
+                            Text("\(record.muscleMass, specifier: "%.1f")")
                                 .appFont(.tagSemiBold12)
                                        .foregroundColor(.gray)
                         })
-                        
-                        RuleMark(y: .value("Goal", viewModel.goalWeight))
-                                .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
-                                .foregroundStyle(.green)
-                                .annotation(position: .top, alignment: .leading) {
-                                    Text("🎯 Goal: \(viewModel.goalWeight, specifier: "%.1f") kg")
-                                        .appFont(.tagSemiBold12)
-                                        .foregroundColor(.gray)
-                                }
                        
                     }
-                    .chartYScale(domain: viewModel.minWeight...viewModel.maxWeight)
+                    .chartYScale(domain: viewModel.minBodyFat...viewModel.maxBodyFat)
                     
                     .frame(maxHeight: .infinity)
                     .frame(maxWidth: .infinity)
@@ -122,11 +113,11 @@ struct WeightCardView: View {
             
         }
         .onAppear {
-            viewModel.action(.fetchWeight)
+            viewModel.action(.fetchBodyFatMass)
         }
     }
 }
 
 #Preview {
-    WeightCardView()
+    BodyFatMassChartView()
 }

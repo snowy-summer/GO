@@ -9,5 +9,7 @@ import Foundation
 
 struct WeightData: Codable {
     let weight: Double
+    let muscleMass: Double
+    let bodyFatMass: Double
     let date: Date
 }

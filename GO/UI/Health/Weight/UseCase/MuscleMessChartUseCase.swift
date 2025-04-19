@@ -1,29 +1,29 @@
 //
-//  WeightChartUseCase.swift
+//  MuscleMessChartUseCase.swift
 //  GO
 //
-//  Created by 최승범 on 4/17/25.
+//  Created by 최승범 on 4/18/25.
 //
 
 import Foundation
 
-protocol WeightChartUseCaseProtocol {
+protocol MuscleMessChartUseCaseProtocol {
     func fetchChartData() -> [WeightChartData]
     func getDateRange() -> String
 }
 
-final class WeightChartUseCase: WeightChartUseCaseProtocol {
+final class MuscleMessChartUseCase: MuscleMessChartUseCaseProtocol {
     private let WeightRepository: WeightRepositoryProtocol = MockWeightRepository()
     private let dateManager: DateManager = DateManager.shared
     private let userData: UserDefaultsManager = UserDefaultsManager.shared
     
-    /// 몸무게 데이터 받아오기
+    /// 골격근량 데이터 받아오기
     func fetchChartData() -> [WeightChartData] {
         let weight = WeightRepository.fetchWeightRecentSeven()
         return convertToChartData(for: weight)
     }
     
-    /// 몸무게 변환
+    /// 차트 데이터 변환
     private func convertToChartData(for weight: [WeightData]) -> [WeightChartData] {
         
         var weightList: [WeightChartData] = []
