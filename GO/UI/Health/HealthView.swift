@@ -76,7 +76,7 @@ struct HealthView: View {
                             WeightDetailView()
                                 .background(.back)
                         case .calories:
-                            HealthDashboardView()
+                            FoodCaloriesDetailView()
                                 .background(.back)
                         case .workouts:
                             WeightDetailView()

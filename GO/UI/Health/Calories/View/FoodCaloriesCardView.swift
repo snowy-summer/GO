@@ -10,7 +10,6 @@ import SwiftUI
 struct FoodCaloriesCardView: View {
     
     @StateObject private var viewModel: FoodCaloriesCardViewModel = FoodCaloriesCardViewModel()
-    @State private var animatedPercent: CGFloat = 0
     
     var body: some View {
         
