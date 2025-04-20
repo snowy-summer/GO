@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HealthView: View {
+    
+    @StateObject var viewModel: HealthViewModel = HealthViewModel()
+    
     var body: some View {
         HStack {
             VStack(spacing: 20) {
@@ -56,51 +59,31 @@ struct HealthView: View {
                             .appFont(.bodyRegular16)
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
+                            .onTapGesture {
+                                viewModel.action(.changeView(type))
+                            }
                             
                     }
                     .listStyle(.plain)
                     .frame(width: 200)
                     .frame(maxHeight: .infinity)
-                    
-                    GeometryReader { geometry in
-                        let width = geometry.size.width
-                        let height = geometry.size.height
-                        let horizontalPadding: CGFloat = 20
-                        let spacing: CGFloat = 20
-//                        ScrollView {
-//                            VStack(spacing: spacing) {
-//                                HStack(spacing: spacing) {
-//                                    BurnCaloriesCardView()
-//                                        .background(.white)
-//                                        .clipShape(RoundedRectangle(cornerRadius: 20))
-//                                        .frame(width: width * 0.65,
-//                                               height: height * 0.35)
-//                                    FoodCaloriesCardView()
-//                                        .background(.white)
-//                                        .clipShape(RoundedRectangle(cornerRadius: 20))
-//                                        .frame(maxWidth: .infinity)
-//                                        .frame( height: height * 0.35)
-//                                    
-//                                }
-//                                
-//                                InformationCardView()
-//                                    .frame(height: height * 0.4)
-//                                
-//                                WeightChartCardView()
-//                                    .background(.white)
-//                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-//                                    .frame(maxWidth: .infinity)
-//                                    .frame(height: height * 0.5)
-//                                    
-//                                
-//                            }
-//                            .padding(.horizontal, horizontalPadding)
-//                            .frame(maxWidth: .infinity,
-//                                   maxHeight: .infinity)
-//                            
-//                        }
-                        WeightDetailView()
+                    NavigationStack {
+                        switch viewModel.showedViewType {
+                        case .dashboard:
+                            HealthDashboardView()
+                                .background(.back)
+                        case .information:
+                            WeightDetailView()
+                                .background(.back)
+                        case .calories:
+                            HealthDashboardView()
+                                .background(.back)
+                        case .workouts:
+                            WeightDetailView()
+                                .background(.back)
+                        }
                     }
+                    
                 }
             }
         }
