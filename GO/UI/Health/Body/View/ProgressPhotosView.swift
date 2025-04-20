@@ -30,7 +30,7 @@ struct ProgressPhotosView: View {
                 .appFont(.sectionTitleBold28)
             Spacer()
             NavigationLink {
-                ProgressPhotosAlbumView(width: width, photos: viewModel.photos)
+                ProgressPhotosAlbumView(photos: viewModel.photos)
                 
             } label: {
                 Text("Album")
