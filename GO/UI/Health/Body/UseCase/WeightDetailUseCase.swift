@@ -9,9 +9,9 @@ import Foundation
 
 protocol WeightDetailUseCaseProtocol {
     func fetchChartData() -> [WeightChartData]
-    func evaluateWeightState(data: WeightChartData) -> BodyState
-    func evaluateMuscleMassState(data: WeightChartData) -> BodyState
-    func evaluateBodyFatState(data: WeightChartData) -> BodyState
+    func evaluateWeightState(data: WeightChartData) -> ValueState
+    func evaluateMuscleMassState(data: WeightChartData) -> ValueState
+    func evaluateBodyFatState(data: WeightChartData) -> ValueState
 }
 
 final class WeightDetailUseCase: WeightDetailUseCaseProtocol {
@@ -41,7 +41,7 @@ final class WeightDetailUseCase: WeightDetailUseCaseProtocol {
     }
     
     ///  키, 정보에 따라서 적정 체중 판단 -> Over, Normal, Under
-    func evaluateWeightState(data: WeightChartData) -> BodyState {
+    func evaluateWeightState(data: WeightChartData) -> ValueState {
         let height = userData.userHeight
         let weight = data.weight
         
@@ -62,7 +62,7 @@ final class WeightDetailUseCase: WeightDetailUseCaseProtocol {
     
     ///  키, 몸무게에 따라서 적정 근육량 판단 -> Over, Normal, Under
     
-    func evaluateMuscleMassState(data: WeightChartData) -> BodyState {
+    func evaluateMuscleMassState(data: WeightChartData) -> ValueState {
         let weight = data.weight
         let muscleMass = data.muscleMass
         let gender = Gender(rawValue: userData.gender) ?? .male
@@ -93,7 +93,7 @@ final class WeightDetailUseCase: WeightDetailUseCaseProtocol {
         }
     }
     ///  키, 몸무게에 따라서 적정 체지방량 판단 -> Over, Normal, Under
-    func evaluateBodyFatState(data: WeightChartData) -> BodyState {
+    func evaluateBodyFatState(data: WeightChartData) -> ValueState {
         let weight = data.weight
         let bodyFatMass = data.bodyFatMass
         let bodyFatPercent = (bodyFatMass / weight) * 100

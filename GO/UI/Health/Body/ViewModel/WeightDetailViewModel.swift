@@ -12,13 +12,13 @@ protocol WeightDetailViewModelProtocol: ViewModelAble {
     var day: String { get }
     
     var recentWeight: Double { get }
-    var recentWeightState: BodyState { get }
+    var recentWeightState: ValueState { get }
     
     var recentMuscleMass: Double { get }
-    var recentMuscleMassState: BodyState { get }
+    var recentMuscleMassState: ValueState { get }
     
     var recentBodyFatPercent: Double { get }
-    var recentBodyFatState: BodyState { get }
+    var recentBodyFatState: ValueState { get }
     
     var isExpanded: Bool { get }
 }
@@ -29,13 +29,13 @@ final class WeightDetailViewModel: WeightDetailViewModelProtocol {
     @Published var day: String = ""
     
     @Published var recentWeight: Double = 0
-    var recentWeightState: BodyState = .normal
+    var recentWeightState: ValueState = .normal
     
     @Published var recentMuscleMass: Double = 0
-    var recentMuscleMassState: BodyState = .normal
+    var recentMuscleMassState: ValueState = .normal
     
     @Published var recentBodyFatPercent: Double = 0
-    var recentBodyFatState: BodyState = .normal
+    var recentBodyFatState: ValueState = .normal
     
     @Published var isExpanded: Bool = false
     

@@ -128,7 +128,7 @@ struct WeightDetailView: View {
         let width: CGFloat
         let title: String          // 예: "Muscle (kg)"
         let value: Double          // 예: "34.0"
-        let bodyState: BodyState  //예: .normal
+        let bodyState: ValueState  //예: .normal
 
         var body: some View {
             VStack(spacing: 8) {

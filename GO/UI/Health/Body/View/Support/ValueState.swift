@@ -1,5 +1,5 @@
 //
-//  BodyState.swift
+//  ValueState.swift
 //  GO
 //
 //  Created by 최승범 on 4/19/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum BodyState: CaseIterable {
+enum ValueState: CaseIterable {
     case over
     case normal
     case under
