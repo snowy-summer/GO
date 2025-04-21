@@ -8,12 +8,15 @@
 import SwiftUI
 
 enum NutrientType {
+    case calories
     case carbs
     case protein
     case fat
     
     var label: String {
         switch self {
+        case .calories:
+            return "Calories"
         case .carbs:
             return "Carbs"
         case .protein:
@@ -25,6 +28,8 @@ enum NutrientType {
     
     var color: Color {
         switch self {
+        case .calories:
+            return .calories
         case .carbs:
             return .carbs
         case .protein:

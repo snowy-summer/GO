@@ -27,22 +27,26 @@ struct FoodCaloriesDetailView: View {
                         .background(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    MealCardView(height: height,
+                    MealCardView(type: .breakfast,
+                                 height: height,
                                  isExpanded: $isBreakfastExpanded)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    MealCardView(height: height,
+                    MealCardView(type: .lunch,
+                                 height: height,
                                  isExpanded: $isLunchfastExpanded)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    MealCardView(height: height,
+                    MealCardView(type: .dinner,
+                                 height: height,
                                  isExpanded: $isDinnerfastExpanded)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    MealCardView(height: height,
+                    MealCardView(type: .snack,
+                                 height: height,
                                  isExpanded: $isSnackfastExpanded)
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -205,7 +209,7 @@ struct FoodCaloriesDetailView: View {
     }
     
     private struct MealCardView: View {
-        
+        let type: MealType
         let height: CGFloat
         
         @Binding var isExpanded: Bool
@@ -221,7 +225,7 @@ struct FoodCaloriesDetailView: View {
                     VStack {
                         
                         HStack {
-                            Text("Snack")
+                            Text(type.label)
                                 .appFont(.sectionTitleBold28)
                             
                             Spacer()

@@ -11,9 +11,3 @@ struct BurnCaloriesData: Codable {
     let calories: Int
     let date: Date
 }
-
-struct FoodCaloriesData: Codable {
-    let calories: Int
-    let date: Date
-    let type: String
-}

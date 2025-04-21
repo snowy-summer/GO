@@ -14,10 +14,3 @@ struct BurnCaloriesChartData: Identifiable {
     let percent: CGFloat
     let isToday: Bool
 }
-
-struct FoodCaloriesChartData: Identifiable {
-    let id = UUID()
-    let rawValue: Int
-    let percent: CGFloat
-    let goal: Int
-}
