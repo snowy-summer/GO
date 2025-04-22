@@ -36,8 +36,9 @@ struct InformationCardView: View {
     }
     
     func heartCard(width: CGFloat) -> some View {
-        let isMini = UIScreen.main.bounds.width <= 1140
-        let cardWidth = width * (isMini ? 0.25 : 0.2)
+//        let isMini = UIScreen.main.bounds.width <= 1140
+//        let cardWidth = width * (isMini ? 0.25 : 0.2)
+        let cardWidth = width * 0.25
 
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
@@ -65,8 +66,9 @@ struct InformationCardView: View {
     }
     
     func sleepTimeCard(width: CGFloat) -> some View {
-        let isMini = UIScreen.main.bounds.width <= 1140
-        let cardWidth = width * (isMini ? 0.25 : 0.2)
+//        let isMini = UIScreen.main.bounds.width <= 1140
+//        let cardWidth = width * (isMini ? 0.25 : 0.2)
+        let cardWidth = width * 0.25
 
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
@@ -101,7 +103,8 @@ struct InformationCardView: View {
     
     func waterCard(width: CGFloat) -> some View {
         let isMini = UIScreen.main.bounds.width <= 1140
-        let cardWidth = width * (isMini ? 0.25 : 0.2)
+//        let cardWidth = width * (isMini ? 0.25 : 0.2)
+        let cardWidth = width * 0.25
 
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
@@ -132,8 +135,9 @@ struct InformationCardView: View {
     
     func stepsCard(width: CGFloat) -> some View {
         
-        let isMini = UIScreen.main.bounds.width <= 1140
-        let cardWidth = width * (isMini ? 0.25 : 0.2)
+//        let isMini = UIScreen.main.bounds.width <= 1140
+//        let cardWidth = width * (isMini ? 0.25 : 0.2)
+        let cardWidth = width * 0.25
 
         
         return ZStack {
