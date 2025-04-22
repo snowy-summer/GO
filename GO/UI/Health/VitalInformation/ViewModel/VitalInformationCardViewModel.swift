@@ -1,5 +1,5 @@
 //
-//  InformationCardViewModel.swift
+//  VitalInformationCardViewModel.swift
 //  GO
 //
 //  Created by 최승범 on 4/15/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol InformationCardViewModelProtocol: ViewModelAble {
+protocol VitalInformationCardViewModelProtocol: ViewModelAble {
     var heartRateChartDataList: [InformationChartData] { get }
     var sleepTimeChartDataList: [SleepTimeChartData] { get }
     var stepsChartDataList: [InformationChartData] { get }
@@ -21,7 +21,7 @@ protocol InformationCardViewModelProtocol: ViewModelAble {
     var isAnimating: Bool { get }
 }
 
-final class InformationCardViewModel: InformationCardViewModelProtocol {
+final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol {
     
     @Published var heartRateChartDataList: [InformationChartData] = []
     @Published var sleepTimeChartDataList: [SleepTimeChartData] = []
@@ -107,7 +107,7 @@ final class InformationCardViewModel: InformationCardViewModelProtocol {
     
 }
 
-extension InformationCardViewModel {
+extension VitalInformationCardViewModel {
     
     /// 오늘 데이터의  rawValue만 추출하는 공통 함수
     private func extractTodayValue<T>(from list: [T]) -> T.RawValue where T: HasTodayValue {

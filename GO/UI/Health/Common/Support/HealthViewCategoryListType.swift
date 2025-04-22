@@ -9,7 +9,7 @@ import SwiftUI
 
 enum HealthViewCategoryListType: CaseIterable {
     case dashboard
-    case information
+    case bodyInformation
     case calories
     case workouts
     
@@ -18,8 +18,8 @@ enum HealthViewCategoryListType: CaseIterable {
         switch self {
         case .dashboard:
             return ImageTextData(text: "Dashboard", imageName: "house")
-        case .information:
-            return ImageTextData(text: "Information", imageName: "person.text.rectangle")
+        case .bodyInformation:
+            return ImageTextData(text: "Body Information", imageName: "person.text.rectangle")
         case .calories:
             return ImageTextData(text: "Calories", imageName: "carrot")
         case .workouts:

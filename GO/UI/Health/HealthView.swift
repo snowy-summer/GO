@@ -72,7 +72,7 @@ struct HealthView: View {
                         case .dashboard:
                             HealthDashboardView()
                                 .background(.back)
-                        case .information:
+                        case .bodyInformation:
                             WeightDetailView()
                                 .background(.back)
                         case .calories:

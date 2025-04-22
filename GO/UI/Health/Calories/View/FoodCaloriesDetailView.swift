@@ -185,7 +185,7 @@ struct FoodCaloriesDetailView: View {
                 }
                 
                 HStack {
-                    Text("\(value, specifier: "%.0f")")
+                    Text("\(value)")
                         .appFont(.listTitleBold20)
                     Text(" / 200")
                         .appFont(.listTitleBold20)

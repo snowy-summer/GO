@@ -30,7 +30,7 @@ struct HealthDashboardView: View {
                         
                     }
                     
-                    InformationCardView()
+                    VitalInformationCardView()
                         .frame(height: height * 0.4)
                     
                     WeightChartCardView()

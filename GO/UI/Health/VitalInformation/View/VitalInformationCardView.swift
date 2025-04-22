@@ -1,5 +1,5 @@
 //
-//  InformationCardView.swift
+//  VitalInformationCardView.swift
 //  GO
 //
 //  Created by 최승범 on 4/14/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct InformationCardView: View {
+struct VitalInformationCardView: View {
     
-    @StateObject var viewModel: InformationCardViewModel = InformationCardViewModel()
+    @StateObject var viewModel: VitalInformationCardViewModel = VitalInformationCardViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -263,5 +263,5 @@ struct InformationCardView: View {
 }
 
 #Preview {
-    InformationCardView()
+    VitalInformationCardView()
 }
