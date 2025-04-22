@@ -19,7 +19,7 @@ enum ValueState: CaseIterable {
         case .normal:
             return .normal
         case .under:
-            return .yellow
+            return .under
         }
     }
     

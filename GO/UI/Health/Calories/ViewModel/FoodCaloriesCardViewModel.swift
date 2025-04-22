@@ -14,7 +14,7 @@ protocol FoodCaloriesCardViewModelProtocol: ViewModelAble {
 
 final class FoodCaloriesCardViewModel: FoodCaloriesCardViewModelProtocol {
     
-    @Published var calories: FoodCaloriesChartData = FoodCaloriesChartData(rawValue: 0, percent: 0, goal: 0)
+    @Published var calories: FoodCaloriesChartData = FoodCaloriesChartData(id: UUID(), rawValue: 0, percent: 0, goal: 0)
     @Published var percent: CGFloat = 0
     
     private let caloriesUseCase: FoodCaloriesUseCaseProtocol

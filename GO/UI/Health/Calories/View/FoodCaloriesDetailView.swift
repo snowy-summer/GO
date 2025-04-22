@@ -9,10 +9,7 @@ import SwiftUI
 
 struct FoodCaloriesDetailView: View {
     
-    @State var isBreakfastExpanded: Bool = false
-    @State var isLunchfastExpanded: Bool = false
-    @State var isDinnerfastExpanded: Bool = false
-    @State var isSnackfastExpanded: Bool = false
+    @StateObject private var viewModel: FoodDetailViewModel = FoodDetailViewModel()
     
     var body: some View {
         
@@ -27,27 +24,27 @@ struct FoodCaloriesDetailView: View {
                         .background(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    MealCardView(type: .breakfast,
-                                 height: height,
-                                 isExpanded: $isBreakfastExpanded)
+                    MealCardView(height: height,
+                                 viewModel: MealCardViewModel(type: .breakfast,
+                                                              data: viewModel.breakfast))
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    MealCardView(type: .lunch,
-                                 height: height,
-                                 isExpanded: $isLunchfastExpanded)
+                    MealCardView(height: height,
+                                 viewModel: MealCardViewModel(type: .lunch,
+                                                              data: viewModel.lunch))
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    MealCardView(type: .dinner,
-                                 height: height,
-                                 isExpanded: $isDinnerfastExpanded)
+                    MealCardView(height: height,
+                                 viewModel: MealCardViewModel(type: .dinner,
+                                                              data: viewModel.dinner))
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    MealCardView(type: .snack,
-                                 height: height,
-                                 isExpanded: $isSnackfastExpanded)
+                    MealCardView(height: height,
+                                 viewModel: MealCardViewModel(type: .snack,
+                                                              data: viewModel.snack))
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
@@ -55,6 +52,9 @@ struct FoodCaloriesDetailView: View {
             .padding()
         }
         .background(.back)
+        .onAppear {
+            viewModel.action(.fetchData)
+        }
     }
     
     private var dateNavigator: some View {
@@ -98,69 +98,69 @@ struct FoodCaloriesDetailView: View {
                 Spacer()
                 
                 // 칼로리 & 원형 차트
-                    VStack {
-                        HStack {
+                VStack {
+                    HStack {
+                        VStack {
+                            Text("오늘 섭취 열량")
+                                .appFont(.cardTitleSemibold22)
+                            HStack(spacing: 4) {
+                                Text("\(viewModel.totalCalories)")
+                                    .appFont(.largeTitleBold34)
+                                Text("/ \(viewModel.goalCalories)")
+                                    .appFont(.largeTitleBold34)
+                                Text("kcal")
+                                    .appFont(.primaryButtonSemiBold16)
+                            }
+                            .padding()
+                        }
+                        Spacer()
+                        ZStack {
+                            Circle()
+                                .trim(from: 0.0, to: 1)
+                                .stroke(Color.gray.opacity(0.2),
+                                        style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                                .frame(width: size, height: size)
+                            
                             VStack {
-                                Text("오늘 섭취 열량")
-                                    .appFont(.cardTitleSemibold22)
-                                HStack(spacing: 4) {
-                                    Text("1,249")
-                                        .appFont(.largeTitleBold34)
-                                    Text("/ 1,890")
-                                        .appFont(.largeTitleBold34)
-                                    Text("kcal")
-                                        .appFont(.primaryButtonSemiBold16)
-                                }
-                                .padding()
+                                Text("\(viewModel.remainCalories)")
+                                    .appFont(.largeTitleBold34)
+                                Text("남은 열량")
+                                    .appFont(.tagSemiBold12)
                             }
-                            Spacer()
-                            ZStack {
-                                Circle()
-                                    .trim(from: 0.0, to: 1)
-                                    .stroke(Color.gray.opacity(0.2),
-                                            style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
-                                    .frame(width: size, height: size)
-                                
-                                VStack {
-                                    Text("641")
-                                        .appFont(.largeTitleBold34)
-                                    Text("남은 열량")
-                                        .appFont(.tagSemiBold12)
-                                }
-                                
-                                Circle()
-                                    .trim(from: 0.0, to: 0.25)
-                                    .stroke(Color.foodCalories,
-                                            style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
-                                    .rotationEffect(.degrees(-90))
-                                    .animation(.easeOut(duration: 0.8), value: 0.25)
-                                    .frame(width: size, height: size)
-                            }
-                            .frame(width: size * 1.2, height: size * 1.2)
+                            
+                            Circle()
+                                .trim(from: 0.0, to: 0.25)
+                                .stroke(Color.foodCalories,
+                                        style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                                .rotationEffect(.degrees(-90))
+                                .animation(.easeOut(duration: 0.8), value: 0.25)
+                                .frame(width: size, height: size)
                         }
-                        .padding()
-                        HStack {
-                            Spacer()
-                            NutrientCardView(width: width,
-                                             type: .carbs,
-                                             value: 100,
-                                             state: .over)
-                            Spacer()
-                            NutrientCardView(width: width,
-                                             type: .protein,
-                                             value: 120,
-                                             state: .normal)
-                            Spacer()
-                            NutrientCardView(width: width,
-                                             type: .fat,
-                                             value: 86,
-                                             state: .under)
-                            Spacer()
-                        }
+                        .frame(width: size * 1.2, height: size * 1.2)
                     }
-                    .padding(.horizontal)
-                    
-                    Spacer()
+                    .padding()
+                    HStack {
+                        Spacer()
+                        NutrientCardView(width: width,
+                                         type: .carbs,
+                                         value: viewModel.totalCarbs,
+                                         state: .over)
+                        Spacer()
+                        NutrientCardView(width: width,
+                                         type: .protein,
+                                         value: viewModel.totalProtein,
+                                         state: .normal)
+                        Spacer()
+                        NutrientCardView(width: width,
+                                         type: .fat,
+                                         value: viewModel.totalFat,
+                                         state: .under)
+                        Spacer()
+                    }
+                }
+                .padding(.horizontal)
+                
+                Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 20)
@@ -170,7 +170,7 @@ struct FoodCaloriesDetailView: View {
     private struct NutrientCardView: View {
         let width: CGFloat
         let type: NutrientType
-        let value: Double
+        let value: Int
         let state: ValueState
         
         var body: some View {
@@ -208,127 +208,7 @@ struct FoodCaloriesDetailView: View {
         }
     }
     
-    private struct MealCardView: View {
-        let type: MealType
-        let height: CGFloat
-        
-        @Binding var isExpanded: Bool
-        
-        var body: some View {
-            DisclosureGroup(
-                isExpanded: $isExpanded,
-                content: {
-                    foodCardView(size: height)
-                        .padding()
-                },
-                label: {
-                    VStack {
-                        
-                        HStack {
-                            Text(type.label)
-                                .appFont(.sectionTitleBold28)
-                            
-                            Spacer()
-                            
-                            Text("226")
-                                .appFont(.cardTitleSemibold22)
-                            Text("kcal")
-                                .appFont(.bodyRegular16)
-                        }
-                        
-                        HStack {
-                            Circle()
-                                .fill(.carbs)
-                                .frame(width: 20, height: 20)
-                            Text("32 g")
-                            
-                            Circle()
-                                .fill(.protein)
-                                .frame(width: 20, height: 20)
-                            Text("12 g")
-                            
-                            Circle()
-                                .fill(.fat)
-                                .frame(width: 20, height: 20)
-                            Text("8 g")
-                            Spacer()
-                            
-                        }
-                    }
-                    .padding(.horizontal)
-                    //                    .offset(x: 0, y: 20)
-                }
-            )
-            .padding()
-            .tint(.black)
-        }
-        
-        private func foodCardView(size: CGFloat) -> some View {
-            VStack {
-                HStack(alignment: .top, spacing: 16) {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray.opacity(0.2))
-                        .frame(width: size * 0.25, height: size * 0.25)
-                        .overlay(Text("Meal Photo"))
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("시리얼 100g")
-                            .appFont(.cardTitleSemibold22)
-                        
-                        VStack(alignment: .leading, spacing: 20) {
-                            nutrientBar(type: .carbs, value: 32)
-                            nutrientBar(type: .protein, value: 12)
-                            nutrientBar(type: .fat, value: 8)
-                        }
-                    }
-                    
-                    Spacer()
-                }
-            }
-        }
-        
-        private func nutrientBar(type: NutrientType,
-                                 value: CGFloat) -> some View {
-            
-            GeometryReader { geometry in
-                let width = geometry.size.width
-                let height = geometry.size.height
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(type.label)
-                            .appFont(.tagSemiBold12)
-                        Text("\(value, specifier: "%.1f") g")
-                            .appFont(.emphasisSemiBold16)
-                        
-                    }
-                    .frame(width: width * 0.1,  alignment: .leading)
-                    
-                    ZStack(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 100)
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(height: height * 0.6)
-                            .frame(maxWidth: width * 0.9)
-                        
-                        RoundedRectangle(cornerRadius: 100)
-                            .fill(type.color)
-                            .frame(height: height * 0.6)
-                            .frame(width: width * 0.2)
-                        
-                        // 적정량 표시선 (0.8 위치)
-                        VStack {
-                            Text("80 g")
-                                .appFont(.tagSemiBold12)
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.black.opacity(0.5))
-                                .frame(width: 4)
-                                .frame(height: height * 0.7)
-                        }
-                        .offset(x: width * 0.9 * 0.8, y: -height * 0.3) // 👉 0.8 지점
-                    }
-                }
-            }
-        }
-    }
+    
     
 }
 

@@ -27,7 +27,7 @@ final class FoodCaloriesUseCase: FoodCaloriesUseCaseProtocol {
     
     func getTodayUIData() -> DayFoodCaloriesUIData {
         let dayData = caloriesRepository.fetchFoodCaloriesToday()
-        return dayData.toUIModel()
+        return calculateIntake(from: dayData.toUIModel())
     }
     
     func getTotal(for type: NutrientType,
@@ -44,12 +44,52 @@ final class FoodCaloriesUseCase: FoodCaloriesUseCaseProtocol {
         }
     }
     
+    private func calculateIntake(from data: DayFoodCaloriesUIData) -> DayFoodCaloriesUIData {
+        var resultData = data
+
+        let updatedFoods = data.foods.map { food in
+            var newFood = food
+            var newGoal = newFood.goalIntake
+
+            newGoal.calories = calculateTargetIntake(for: food.type, nutrient: .calories, goals: data.goalIntake)
+            newGoal.carbs = calculateTargetIntake(for: food.type, nutrient: .carbs, goals: data.goalIntake)
+            newGoal.protein = calculateTargetIntake(for: food.type, nutrient: .protein, goals: data.goalIntake)
+            newGoal.fat = calculateTargetIntake(for: food.type, nutrient: .fat, goals: data.goalIntake)
+
+            newFood.goalIntake = newGoal
+            return newFood
+        }
+
+        resultData.foods = updatedFoods
+        
+        return resultData
+    }
+    
+    private func calculateTargetIntake(for mealType: MealType,
+                               nutrient: NutrientType,
+                               goals: GoalIntake) -> Int {
+        
+        let ratio = mealType.ratio
+
+        switch nutrient {
+        case .calories:
+            return Int(Double(goals.calories) * ratio)
+        case .carbs:
+            return Int(Double(goals.carbs) * ratio)
+        case .protein:
+            return Int(Double(goals.protein) * ratio)
+        case .fat:
+            return Int(Double(goals.fat) * ratio)
+        }
+    }
+    
+    
     /// 칼로리 퍼센트 계산
     private func calculateCaloriesPercent(for dayData: DayFoodCaloriesData) -> FoodCaloriesChartData {
 
         let caloriesRawValue = dayData.foods.map { $0.calories }
         let totalCalories = caloriesRawValue.reduce(0, +)
-        let goalCalories = dayData.goalCalories
+        let goalCalories = dayData.goalIntake.calories
         
         let rawPercent = CGFloat(totalCalories) / CGFloat(goalCalories)
         let percent = min(rawPercent, 1.0) * 0.5
