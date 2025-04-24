@@ -6,23 +6,31 @@
 //
 
 import SwiftUI
+import Charts
 
 struct StepsDetailCardView: View {
+    
+    @StateObject var viewModel: StepsDetailViewModel = StepsDetailViewModel()
+    
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
             let height = geometry.size.height
             VStack(spacing: 20) {
                 headerView(width: width)
-                .frame(height: height * 0.3)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .frame(height: height * 0.3)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
                 
                 averageStepsView()
-                    .frame(height: height * 0.3)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: height * 0.5)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
             }
             .padding(.horizontal)
             
+        }
+        .onAppear {
+            viewModel.action(.fetchAllData)
         }
         
     }
@@ -83,15 +91,89 @@ struct StepsDetailCardView: View {
     }
     
     private func averageStepsView() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Stpes Average")
-                .appFont(.listTitleBold20)
-            Text("지난 7일간 하루 평균 걸음 수는 7,139 걸음입니다")
-                .appFont(.emphasisSemiBold16)
-            Rectangle()
+        GeometryReader { geometry in
+            let width = geometry.size.width
+            let height = geometry.size.height
+            let barheght = height * 0.6
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Stpes Average")
+                    .appFont(.listTitleBold20)
+                Text("이번주 하루 평균 걸음 수는 7,139 걸음입니다")
+                    .appFont(.emphasisSemiBold16)
+                Divider()
+                
+                ZStack(alignment: .bottom) {
+                    
+                    HStack(alignment: .bottom) {
+                        
+                        ForEach(viewModel.stepsChartDataList) { step in
+                            Spacer()
+                            chartGraph(percent: step.percent,
+                                       text: step.text,
+                                       isHighlighted: step.isToday,
+                                       maxBarHeight: barheght,
+                                       color: .steps)
+                        }
+                        
+                        //                    Spacer()
+                    }
+                    .padding()
+                    .frame(width: width * 0.7)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Average")
+                        RoundedRectangle(cornerRadius: 20)
+                            .frame(maxWidth: .infinity)
+                            .frame(maxHeight: 8)
+                        HStack {
+                            Text("7,104")
+                                .appFont(.titleBold24)
+                            Text("Steps")
+                                .appFont(.emphasisSemiBold16)
+                                .foregroundStyle(.gray)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .offset(y: -barheght * 0.5) // 평균이 차지하는 퍼센트
+                }
+            }
+            
         }
         .padding()
         .background(.white)
+        
+    }
+    
+    func chartGraph(percent: CGFloat,
+                    text: String,
+                    isHighlighted: Bool = false,
+                    maxBarHeight: CGFloat,
+                    color: Color) -> some View {
+        let barHeight = maxBarHeight * CGFloat(percent)
+        let barColor = isHighlighted ? color : Color.gray.opacity(0.3)
+        
+        return VStack(spacing: 4) {
+            Spacer()
+            RoundedRectangle(cornerRadius: 10)
+                .fill(barColor)
+                .frame(width: 20, height: barHeight)
+                .scaleEffect(y: viewModel.isAnimating ? 1.0 : 0.0, anchor: .bottom)
+                .animation(.easeOut(duration: 0.8), value: viewModel.isAnimating)
+            
+            
+            Circle()
+                .fill(barColor)
+                .frame(width: 16, height: 16)
+            
+            Text(text)
+                .appFont(.emphasisSemiBold16)
+                .foregroundColor(.primary)
+                .padding(.top, 2)
+            
+        }.onAppear {
+            viewModel.action(.animationOn)
+        }
     }
 }
 
