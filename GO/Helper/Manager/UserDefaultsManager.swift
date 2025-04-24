@@ -25,6 +25,14 @@ final class UserDefaultsManager {
     //MARK: - 운동 칼로리
     @UserDefault(key: "burnCaloriesGoal", defaultValue: 600)
     var burnCaloriesGoal: Int
+    
+    //MARK: - 심박수, 걸음, 물, 수면
+    @UserDefault(key: "stepsGoal", defaultValue: 8000)
+    var stepsGoal: Int
+    @UserDefault(key: "sleepTimeGoal", defaultValue: 7)
+    var sleepTimeGoal: Int
+    @UserDefault(key: "waterGoal", defaultValue: 1.5)
+    var waterGoal: Double
 
     //MARK: - 음식 칼로리
     @UserDefault(key: "foodCaloriesGoal", defaultValue: 2400)

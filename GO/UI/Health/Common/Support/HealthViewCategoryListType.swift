@@ -12,6 +12,7 @@ enum HealthViewCategoryListType: CaseIterable {
     case bodyInformation
     case calories
     case workouts
+    case vitalInformation
     
     
     var data: ImageTextData {
@@ -24,6 +25,8 @@ enum HealthViewCategoryListType: CaseIterable {
             return ImageTextData(text: "Calories", imageName: "carrot")
         case .workouts:
             return ImageTextData(text: "Work Outs", imageName: "dumbbell")
+        case .vitalInformation:
+            return ImageTextData(text: "Vital Information", imageName: "person.text.rectangle")
         }
     }
     
