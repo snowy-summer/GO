@@ -81,6 +81,9 @@ struct HealthView: View {
                         case .workouts:
                             WeightDetailView()
                                 .background(.back)
+                        case .vitalInformation:
+                            VitalDetailView()
+                                .background(.back)
                         }
                     }
                     
