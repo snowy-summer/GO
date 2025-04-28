@@ -11,14 +11,14 @@ import Charts
 struct StepsDetailCardView: View {
     
     @StateObject var viewModel: StepsDetailViewModel = StepsDetailViewModel()
-    
+
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
             let height = geometry.size.height
             VStack(spacing: 20) {
-                headerView(width: width)
-                    .frame(height: height * 0.3)
+                
+                headerView(size: geometry.size)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                 
                 averageStepsView()
@@ -35,8 +35,14 @@ struct StepsDetailCardView: View {
         
     }
     
-    private func headerView(width: CGFloat) -> some View {
-        VStack(alignment: .leading) {
+    private func headerView(size: CGSize) -> some View {
+        let width = size.width
+        let height = size.height
+        
+        return VStack(alignment: .leading) {
+            Text("Today Steps")
+                .appFont(.listTitleBold20)
+            Divider()
             HStack {
                 Text("4668")
                     .appFont(.titleBold24)
@@ -56,15 +62,20 @@ struct StepsDetailCardView: View {
             }
             .frame(height: 44)
             
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 100)
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(height: 20)
-                    .frame(width: width * 0.7)
-                RoundedRectangle(cornerRadius: 100)
-                    .fill(.blue)
-                    .frame(height: 20)
-                    .frame(width: width * 0.7 * 0.7)
+            HStack {
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 100)
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(height: 20)
+                        .frame(width: width * 0.7)
+                    RoundedRectangle(cornerRadius: 100)
+                        .fill(.blue)
+                        .frame(height: 20)
+                        .frame(width: width * 0.7 * 0.7)
+                }
+                
+                Circle()
+                    .frame(height: height * 0.08)
             }
             
             
@@ -84,6 +95,7 @@ struct StepsDetailCardView: View {
                 }
                 
             }
+            .frame(height: height * 0.08)
             
         }
         .padding()

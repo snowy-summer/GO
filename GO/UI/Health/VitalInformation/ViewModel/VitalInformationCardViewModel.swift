@@ -17,7 +17,7 @@ protocol VitalInformationCardViewModelProtocol: ViewModelAble {
     var todaySleepTime: Time { get }
     var todayWater: Double { get }
     var todaySteps: Int { get }
-    var selectedInformationCard: InformationCardType { get }
+    var selectedInformationCard: VitalInformationType { get }
     var isAnimating: Bool { get }
 }
 
@@ -35,7 +35,7 @@ final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol
     @Published var todayWater: Double = 0
     @Published var todaySteps: Int = 0
     
-    @Published var selectedInformationCard: InformationCardType = .heartRate
+    @Published var selectedInformationCard: VitalInformationType = .heartRate
     @Published var isAnimating: Bool = false
     
     private let heartRateChartUseCase: HeartRateChartUseCaseProtocol
@@ -49,7 +49,7 @@ final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol
         case fetchSleepTimeData
         case fetchStepsData
         case fetchWaterData
-        case selectCard(InformationCardType)
+        case selectCard(VitalInformationType)
         case animationOn
     }
     
