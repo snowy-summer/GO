@@ -66,12 +66,23 @@ final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol
     func action(_ intent: Intent) {
         switch intent {
         case .fetchAllData:
-            heartRateChartDataList = heartRateChartUseCase.fetchChartData()
-            sleepTimeChartDataList = sleepTimeChartUseCase.fetchChartData()
-            stepsChartDataList = stepsChartUseCase.fetchChartData()
-            waterChartDataList = waterChartUseCase.fetchChartData()
+            Task {
+                do {
+                    let data = try await stepsChartUseCase.fetchChartData(for: .thisWeek)
+                    
+                    await MainActor.run {
+                        stepsChartDataList = data
+                        heartRateChartDataList = heartRateChartUseCase.fetchChartData()
+                        sleepTimeChartDataList = sleepTimeChartUseCase.fetchChartData()
+                        todayValue()
+                        waterChartDataList = waterChartUseCase.fetchChartData()
+                    }
+                    
+                } catch(let error) {
+                    LogManager.errorLog(error)
+                }
+            }
             
-            todayValue()
             
         case .fetchHeartRateData:
             heartRateChartDataList = heartRateChartUseCase.fetchChartData()
@@ -80,7 +91,13 @@ final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol
             sleepTimeChartDataList = sleepTimeChartUseCase.fetchChartData()
             
         case .fetchStepsData:
-            stepsChartDataList = stepsChartUseCase.fetchChartData()
+            Task {
+                do {
+                    stepsChartDataList = try await stepsChartUseCase.fetchChartData(for: .thisWeek)
+                } catch(let error) {
+                    LogManager.errorLog(error)
+                }
+            }
             
         case .fetchWaterData:
             waterChartDataList = waterChartUseCase.fetchChartData()

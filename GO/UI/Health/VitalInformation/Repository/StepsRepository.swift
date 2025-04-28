@@ -7,12 +7,32 @@
 
 import Foundation
 protocol StepsRepositoryProtocol {
-    func fetchStepsThisWeek() -> [StepsData]
+    func fetchSteps(start: Date, end: Date) async throws -> [StepsData]
 }
 
+final class StepsRepository: StepsRepositoryProtocol {
+    private let healthManager = HealthInformationManager()
+
+    func fetchSteps(start: Date, end: Date) async throws -> [StepsData] {
+        let stepsArray = try await healthManager.fetchStepCount(start: start, end: end)
+
+        var weekData: [StepsData] = []
+        var currentDate = start
+        
+        for steps in stepsArray {
+            weekData.append(StepsData(steps: steps, date: currentDate))
+            currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+        }
+        
+        return weekData
+    }
+    
+}
 final class MockStepsRepository: StepsRepositoryProtocol {
-    func fetchStepsThisWeek() -> [StepsData] {
-        let dateManager = DateManager.shared
+    let dateManager = DateManager.shared
+
+    func fetchSteps(start: Date = Date(), end: Date = Date()) async throws-> [StepsData] {
+        
         return [
             StepsData(steps: 8652, date: dateManager.getDate(from: "2025.04.13")), // 일
             StepsData(steps: 2042, date: dateManager.getDate(from: "2025.04.14")), // 월

@@ -30,7 +30,7 @@ struct WaterChartUseCase: WaterChartUseCaseProtocol {
     /// 차트 요소 퍼센트 계산
     private func calculatePercent(from data: [WaterData]) -> [WaterChartData] {
         let values = data.map { $0.amount }
-        let percents = healthManager.calculateWaterPercent(for: values)
+        let percents = HealthChartCalculator.calculateWaterPercent(for: values)
 
         return zip(data, percents).map { item, percent in
             WaterChartData(

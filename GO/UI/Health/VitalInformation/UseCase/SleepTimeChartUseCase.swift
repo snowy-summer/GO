@@ -27,7 +27,7 @@ final class SleepTimeChartUseCase: SleepTimeChartUseCaseProtocol {
     private func calculatePercent(for times: [SleepTimeData]) -> [SleepTimeChartData] {
         
         let timeRawValue = times.map { $0.time }
-        let percentList = healthManager.calculateSleepTimePercent(for: timeRawValue)
+        let percentList = HealthChartCalculator.calculateSleepTimePercent(for: timeRawValue)
         
         
         let timeUIData = zip(times, percentList).map { (time, percent) in

@@ -34,11 +34,13 @@ struct VitalDetailView: View {
                     case .sleepTime:
                         Text("수면")
                     case .steps:
-                        StepsDetailCardView()
+                        StepsDetailView()
                             .background(.back)
                             .frame(height: height * 1.1)
                     case .water:
-                        Text("물")
+                        WaterIntakeDetailView()
+                            .background(.back)
+                            .frame(height: height * 1.1)
                     }
                     
                     

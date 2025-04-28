@@ -1,5 +1,5 @@
 //
-//  StepsDetailCardView.swift
+//  StepsDetailView.swift
 //  GO
 //
 //  Created by 최승범 on 4/22/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct StepsDetailCardView: View {
+struct StepsDetailView: View {
     
     @StateObject var viewModel: StepsDetailViewModel = StepsDetailViewModel()
 
@@ -106,7 +106,7 @@ struct StepsDetailCardView: View {
         GeometryReader { geometry in
             let width = geometry.size.width
             let height = geometry.size.height
-            let barheght = height * 0.6
+            let barHeight = height * 0.6
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("Stpes Average")
@@ -116,22 +116,20 @@ struct StepsDetailCardView: View {
                 Divider()
                 
                 ZStack(alignment: .bottom) {
-                    
                     HStack(alignment: .bottom) {
-                        
+                        Spacer()
                         ForEach(viewModel.stepsChartDataList) { step in
                             Spacer()
                             chartGraph(percent: step.percent,
                                        text: step.text,
                                        isHighlighted: step.isToday,
-                                       maxBarHeight: barheght,
+                                       maxBarHeight: barHeight,
                                        color: .steps)
                         }
+                        Spacer()
                         
-                        //                    Spacer()
                     }
                     .padding()
-                    .frame(width: width * 0.7)
                     
                     VStack(alignment: .leading) {
                         Text("Average")
@@ -147,7 +145,7 @@ struct StepsDetailCardView: View {
                         }
                     }
                     .padding(.horizontal)
-                    .offset(y: -barheght * 0.5) // 평균이 차지하는 퍼센트
+                    .offset(y: -barHeight * 0.5) // 평균이 차지하는 퍼센트
                 }
             }
             
