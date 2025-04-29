@@ -35,7 +35,8 @@ struct StepsChartUseCase: StepsChartUseCaseProtocol {
                 text: dateManager.weekdayString(from: item.date, style: .narrow),
                 rawValue: item.steps,
                 percent: percent,
-                isToday: dateManager.isSameWeekday(item.date, Date())
+                isToday: dateManager.isSameWeekday(item.date, Date()),
+                distance: item.distance
             )
         }
     }

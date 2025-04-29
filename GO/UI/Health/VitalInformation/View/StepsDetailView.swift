@@ -44,9 +44,9 @@ struct StepsDetailView: View {
                 .appFont(.listTitleBold20)
             Divider()
             HStack {
-                Text("4668")
+                Text("\(viewModel.todaySteps)")
                     .appFont(.titleBold24)
-                Text("/ 8000 Steps")
+                Text("/ \(UserDefaultsManager.shared.stepsGoal) Steps")
                     .appFont(.bodyLargeRegular18)
             }
             
@@ -57,7 +57,7 @@ struct StepsDetailView: View {
                 Text("42 min")
                     .appFont(.bodyLargeRegular18)
                 Divider()
-                Text(" 2.80 km")
+                Text(" \(viewModel.todayDistance, specifier: "%.1f") km")
                     .appFont(.bodyLargeRegular18)
             }
             .frame(height: 44)

@@ -223,7 +223,6 @@ struct VitalInformationCardView: View {
             .padding(20)
         }
         .padding(.bottom)
-        .frame(height: height + 20)
         .frame(maxWidth: .infinity)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))

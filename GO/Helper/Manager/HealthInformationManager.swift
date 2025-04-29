@@ -20,7 +20,7 @@ struct HealthInformationManager {
         HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
         HKObjectType.quantityType(forIdentifier: .dietaryWater)!
     ]
-
+    
     let share: Set<HKSampleType> = [
         HKObjectType.quantityType(forIdentifier: .heartRate)!,
         HKObjectType.quantityType(forIdentifier: .stepCount)!,
@@ -29,7 +29,7 @@ struct HealthInformationManager {
         HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
         HKObjectType.quantityType(forIdentifier: .dietaryWater)!
     ]
-   
+    
     
     //MARK: -  권한 요청
     func configure() {
@@ -132,11 +132,56 @@ extension HealthInformationManager {
             healthStore.execute(query)
         }
     }
-}
-
-extension HealthInformationManager {
     
-    enum HealthError: Error {
-           case typeNotFound
-       }
+    /// 걷기 + 달리기 거리
+    func fetchWalkingRunningDistance(start: Date, end: Date) async throws -> [Double] {
+        guard let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning) else {
+            throw HealthError.typeNotFound
+        }
+        
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: end)
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            let interval = DateComponents(day: 1)
+            
+            let query = HKStatisticsCollectionQuery(
+                quantityType: distanceType,
+                quantitySamplePredicate: predicate,
+                options: .cumulativeSum,
+                anchorDate: start,
+                intervalComponents: interval
+            )
+            
+            query.initialResultsHandler = { _, results, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let statsCollection = results else {
+                    continuation.resume(returning: [])
+                    return
+                }
+                
+                var distancePerDay: [Double] = []
+                statsCollection.enumerateStatistics(from: start, to: end) { statistics, _ in
+                    if let sum = statistics.sumQuantity() {
+                        let distance = sum.doubleValue(for: HKUnit.meter()) // meter 기준
+                        distancePerDay.append(distance)
+                    } else {
+                        distancePerDay.append(0)
+                    }
+                }
+                continuation.resume(returning: distancePerDay)
+            }
+            
+            healthStore.execute(query)
+        }
+    }
+}
+    
+
+enum HealthError: Error {
+    case typeNotFound
+    case dataMismatch
 }
