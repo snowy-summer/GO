@@ -42,7 +42,7 @@ struct VitalInformationCardView: View {
 
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
+                .fill(viewModel.selectedInformationCard == .heartRate ? Color.white : Color.gray.opacity(0.2))
                 .frame(width: cardWidth)
             HStack {
                 Image("heartRate")
@@ -72,7 +72,7 @@ struct VitalInformationCardView: View {
 
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
+                .fill(viewModel.selectedInformationCard == .sleepTime ? Color.white : Color.gray.opacity(0.2))
                 .frame(width: cardWidth)
             HStack {
                 Image(systemName: "moon.zzz.fill")
@@ -108,7 +108,7 @@ struct VitalInformationCardView: View {
 
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
+                .fill(viewModel.selectedInformationCard == .water ? Color.white : Color.gray.opacity(0.2))
                 .frame(width: cardWidth)
             HStack {
                 Image(systemName: "drop.fill")
@@ -142,7 +142,7 @@ struct VitalInformationCardView: View {
         
         return ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
+                .fill(viewModel.selectedInformationCard == .steps ? Color.white : Color.gray.opacity(0.2))
                 .frame(maxWidth: cardWidth)
             HStack {
                 Image(systemName: "shoe.fill")
@@ -223,7 +223,6 @@ struct VitalInformationCardView: View {
             .padding(20)
         }
         .padding(.bottom)
-        .frame(height: height + 20)
         .frame(maxWidth: .infinity)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))

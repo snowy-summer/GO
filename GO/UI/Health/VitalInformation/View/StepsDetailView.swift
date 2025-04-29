@@ -1,5 +1,5 @@
 //
-//  StepsDetailCardView.swift
+//  StepsDetailView.swift
 //  GO
 //
 //  Created by 최승범 on 4/22/25.
@@ -8,17 +8,17 @@
 import SwiftUI
 import Charts
 
-struct StepsDetailCardView: View {
+struct StepsDetailView: View {
     
     @StateObject var viewModel: StepsDetailViewModel = StepsDetailViewModel()
-    
+
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
             let height = geometry.size.height
             VStack(spacing: 20) {
-                headerView(width: width)
-                    .frame(height: height * 0.3)
+                
+                headerView(size: geometry.size)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                 
                 averageStepsView()
@@ -35,12 +35,18 @@ struct StepsDetailCardView: View {
         
     }
     
-    private func headerView(width: CGFloat) -> some View {
-        VStack(alignment: .leading) {
+    private func headerView(size: CGSize) -> some View {
+        let width = size.width
+        let height = size.height
+        
+        return VStack(alignment: .leading) {
+            Text("Today Steps")
+                .appFont(.listTitleBold20)
+            Divider()
             HStack {
-                Text("4668")
+                Text("\(viewModel.todaySteps)")
                     .appFont(.titleBold24)
-                Text("/ 8000 Steps")
+                Text("/ \(UserDefaultsManager.shared.stepsGoal) Steps")
                     .appFont(.bodyLargeRegular18)
             }
             
@@ -51,20 +57,25 @@ struct StepsDetailCardView: View {
                 Text("42 min")
                     .appFont(.bodyLargeRegular18)
                 Divider()
-                Text(" 2.80 km")
+                Text(" \(viewModel.todayDistance, specifier: "%.1f") km")
                     .appFont(.bodyLargeRegular18)
             }
             .frame(height: 44)
             
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 100)
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(height: 20)
-                    .frame(width: width * 0.7)
-                RoundedRectangle(cornerRadius: 100)
-                    .fill(.blue)
-                    .frame(height: 20)
-                    .frame(width: width * 0.7 * 0.7)
+            HStack {
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 100)
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(height: 20)
+                        .frame(width: width * 0.7)
+                    RoundedRectangle(cornerRadius: 100)
+                        .fill(.blue)
+                        .frame(height: 20)
+                        .frame(width: width * 0.7 * 0.7)
+                }
+                
+                Circle()
+                    .frame(height: height * 0.08)
             }
             
             
@@ -84,6 +95,7 @@ struct StepsDetailCardView: View {
                 }
                 
             }
+            .frame(height: height * 0.08)
             
         }
         .padding()
@@ -94,7 +106,7 @@ struct StepsDetailCardView: View {
         GeometryReader { geometry in
             let width = geometry.size.width
             let height = geometry.size.height
-            let barheght = height * 0.6
+            let barHeight = height * 0.6
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("Stpes Average")
@@ -104,22 +116,20 @@ struct StepsDetailCardView: View {
                 Divider()
                 
                 ZStack(alignment: .bottom) {
-                    
                     HStack(alignment: .bottom) {
-                        
+                        Spacer()
                         ForEach(viewModel.stepsChartDataList) { step in
                             Spacer()
                             chartGraph(percent: step.percent,
                                        text: step.text,
                                        isHighlighted: step.isToday,
-                                       maxBarHeight: barheght,
+                                       maxBarHeight: barHeight,
                                        color: .steps)
                         }
+                        Spacer()
                         
-                        //                    Spacer()
                     }
                     .padding()
-                    .frame(width: width * 0.7)
                     
                     VStack(alignment: .leading) {
                         Text("Average")
@@ -135,7 +145,7 @@ struct StepsDetailCardView: View {
                         }
                     }
                     .padding(.horizontal)
-                    .offset(y: -barheght * 0.5) // 평균이 차지하는 퍼센트
+                    .offset(y: -barHeight * 0.5) // 평균이 차지하는 퍼센트
                 }
             }
             

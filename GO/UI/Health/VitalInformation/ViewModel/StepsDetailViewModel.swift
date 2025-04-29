@@ -17,11 +17,9 @@ protocol StepsDetailViewModelProtocol: ViewModelAble {
 final class StepsDetailViewModel: StepsDetailViewModelProtocol {
     
     @Published var stepsChartDataList: [InformationChartData] = []
-    
     @Published var duration: String = ""
-    
     @Published var todaySteps: Int = 0
-    
+    @Published var todayDistance: Double = 0.0
     @Published var isAnimating: Bool = false
     
     private let stepsChartUseCase: StepsChartUseCaseProtocol
@@ -38,34 +36,42 @@ final class StepsDetailViewModel: StepsDetailViewModelProtocol {
     
     func action(_ intent: Intent) {
         switch intent {
-        case .fetchAllData:
-            stepsChartDataList = stepsChartUseCase.fetchChartData()
-            
-            todayValue()
-            
-        case .fetchStepsData:
-            stepsChartDataList = stepsChartUseCase.fetchChartData()
+        case .fetchAllData, .fetchStepsData:
+            Task {
+                do {
+                    let stepsData = try await stepsChartUseCase.fetchChartData(for: .thisWeek)
+//                    todayValue()
+                    let todayData = try await stepsChartUseCase.fetchChartData(for: .today).first
+                    
+                    await MainActor.run {
+                        stepsChartDataList = stepsData
+                        todaySteps = todayData?.rawValue ?? 0
+                        todayDistance = todayData?.distance ?? 0.0
+                        duration = stepsChartUseCase.getDateRange()
+                    }
+                    
+                } catch {
+                    LogManager.log("👟 걸음 데이터를 가지고 오기 실패")
+                }
+            }
             
         case .animationOn:
             isAnimating = true
         }
     }
-    
 }
 
 extension StepsDetailViewModel {
     
-    /// 오늘 데이터의  rawValue만 추출하는 공통 함수
-    private func extractTodayValue<T>(from list: [T]) -> T.RawValue where T: HasTodayValue {
-        return list.first(where: { $0.isToday })?.rawValue ?? T.zeroValue
-    }
+//    private func extractTodayValue<T>(from list: [T]) -> T.RawValue where T: HasTodayValue {
+//        return list.first(where: { $0.isToday })?.rawValue ?? T.zeroValue
+//    }
+//    
+//    private func todayValue() {
+//        todaySteps = extractTodayValue(from: stepsChartDataList)
+//    }
     
-    private func todayValue() {
-        todaySteps = extractTodayValue(from: stepsChartDataList)
-    }
-    
-    private func getDateRange() {
-        duration = stepsChartUseCase.getDateRange()
-    }
-    
+//    private func getDateRange() {
+//        duration = stepsChartUseCase.getDateRange()
+//    }
 }

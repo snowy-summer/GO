@@ -19,6 +19,7 @@ struct SleepTimeData {
 
 struct StepsData {
     let steps: Int
+    let distance: Double
     let date: Date
 }
 

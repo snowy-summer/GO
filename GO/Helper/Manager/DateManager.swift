@@ -65,6 +65,32 @@ final class DateManager {
         return "\(startDay) - \(endFull)"
     }
     
+    /// 기간을 설정해서 날짜 추출하기
+    func getDateRange(for period: StepsFetchPeriod) -> (Date, Date) {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        switch period {
+        case .today:
+            let startOfDay = calendar.startOfDay(for: now)
+            return (startOfDay, now)
+            
+        case .thisWeek:
+            let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)) ?? now
+            return (startOfWeek, now)
+            
+        case .thisMonth:
+            let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) ?? now
+            return (startOfMonth, now)
+        }
+    }
+    
+}
+
+enum StepsFetchPeriod {
+    case today
+    case thisWeek
+    case thisMonth
 }
 
 enum WeekdayStyle {

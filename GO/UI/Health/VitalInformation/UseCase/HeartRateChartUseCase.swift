@@ -28,7 +28,7 @@ final class HeartRateChartUseCase: HeartRateChartUseCaseProtocol {
     private func calculatePercent(for rates: [HeartRateData]) -> [InformationChartData] {
         
         let heartRateRawValue = rates.map { $0.heartRate }
-        let percentList = healthManager.calculateHeartRatePercent(for: heartRateRawValue)
+        let percentList = HealthChartCalculator.calculateHeartRatePercent(for: heartRateRawValue)
                                                                  
         
         let heartRateUIData = zip(rates, percentList).map { (rate, percent) in

@@ -24,7 +24,7 @@ struct HealthView: View {
             .padding(.horizontal)
             
             Rectangle()
-                .fill(.black)
+                .fill(.gray.opacity(0.3))
                 .frame(width: 2)
                 .ignoresSafeArea()
             Spacer()

@@ -39,11 +39,11 @@ struct LogManager {
         }
     }
     
-    static func errorLog(_ error: LocalizedError,
+    static func errorLog(_ error: Error,
                          level: LogLevel = .debug,
                          file: String = #file,
                          function: String = #function,
                          line: Int = #line) {
-        log(error.errorDescription!, level: level, file: file, function: function, line: line)
+        log(error.localizedDescription, level: level, file: file, function: function, line: line)
     }
 }

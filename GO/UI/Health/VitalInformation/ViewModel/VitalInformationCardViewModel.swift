@@ -17,7 +17,7 @@ protocol VitalInformationCardViewModelProtocol: ViewModelAble {
     var todaySleepTime: Time { get }
     var todayWater: Double { get }
     var todaySteps: Int { get }
-    var selectedInformationCard: InformationCardType { get }
+    var selectedInformationCard: VitalInformationType { get }
     var isAnimating: Bool { get }
 }
 
@@ -35,7 +35,7 @@ final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol
     @Published var todayWater: Double = 0
     @Published var todaySteps: Int = 0
     
-    @Published var selectedInformationCard: InformationCardType = .heartRate
+    @Published var selectedInformationCard: VitalInformationType = .heartRate
     @Published var isAnimating: Bool = false
     
     private let heartRateChartUseCase: HeartRateChartUseCaseProtocol
@@ -49,7 +49,7 @@ final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol
         case fetchSleepTimeData
         case fetchStepsData
         case fetchWaterData
-        case selectCard(InformationCardType)
+        case selectCard(VitalInformationType)
         case animationOn
     }
     
@@ -66,12 +66,23 @@ final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol
     func action(_ intent: Intent) {
         switch intent {
         case .fetchAllData:
-            heartRateChartDataList = heartRateChartUseCase.fetchChartData()
-            sleepTimeChartDataList = sleepTimeChartUseCase.fetchChartData()
-            stepsChartDataList = stepsChartUseCase.fetchChartData()
-            waterChartDataList = waterChartUseCase.fetchChartData()
+            Task {
+                do {
+                    let data = try await stepsChartUseCase.fetchChartData(for: .thisWeek)
+                    
+                    await MainActor.run {
+                        stepsChartDataList = data
+                        heartRateChartDataList = heartRateChartUseCase.fetchChartData()
+                        sleepTimeChartDataList = sleepTimeChartUseCase.fetchChartData()
+                        todayValue()
+                        waterChartDataList = waterChartUseCase.fetchChartData()
+                    }
+                    
+                } catch(let error) {
+                    LogManager.errorLog(error)
+                }
+            }
             
-            todayValue()
             
         case .fetchHeartRateData:
             heartRateChartDataList = heartRateChartUseCase.fetchChartData()
@@ -80,7 +91,13 @@ final class VitalInformationCardViewModel: VitalInformationCardViewModelProtocol
             sleepTimeChartDataList = sleepTimeChartUseCase.fetchChartData()
             
         case .fetchStepsData:
-            stepsChartDataList = stepsChartUseCase.fetchChartData()
+            Task {
+                do {
+                    stepsChartDataList = try await stepsChartUseCase.fetchChartData(for: .thisWeek)
+                } catch(let error) {
+                    LogManager.errorLog(error)
+                }
+            }
             
         case .fetchWaterData:
             waterChartDataList = waterChartUseCase.fetchChartData()
