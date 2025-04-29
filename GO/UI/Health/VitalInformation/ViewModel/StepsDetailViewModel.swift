@@ -20,7 +20,10 @@ final class StepsDetailViewModel: StepsDetailViewModelProtocol {
     @Published var duration: String = ""
     @Published var todaySteps: Int = 0
     @Published var todayDistance: Double = 0.0
+    @Published var todayPercent: Double = 0.0
     @Published var isAnimating: Bool = false
+    @Published var averageStepsValue: Int = 0
+    @Published var averageStepsPercent: Double = 0.0
     
     private let stepsChartUseCase: StepsChartUseCaseProtocol
     
@@ -47,7 +50,9 @@ final class StepsDetailViewModel: StepsDetailViewModelProtocol {
                         stepsChartDataList = stepsData
                         todaySteps = todayData?.rawValue ?? 0
                         todayDistance = todayData?.distance ?? 0.0
+                        todayPercent = todayData?.percent ?? 0.0
                         duration = stepsChartUseCase.getDateRange()
+                        averageSteps()
                     }
                     
                 } catch {
@@ -74,4 +79,9 @@ extension StepsDetailViewModel {
 //    private func getDateRange() {
 //        duration = stepsChartUseCase.getDateRange()
 //    }
+    
+    private func averageSteps() {
+        averageStepsValue = stepsChartDataList.map { $0.rawValue }.reduce(0, +) / stepsChartDataList.count
+        averageStepsPercent = Double(averageStepsValue) / Double(UserDefaultsManager.shared.stepsGoal)
+    }
 }

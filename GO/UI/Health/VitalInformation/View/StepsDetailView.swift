@@ -69,13 +69,13 @@ struct StepsDetailView: View {
                         .frame(height: 20)
                         .frame(width: width * 0.7)
                     RoundedRectangle(cornerRadius: 100)
-                        .fill(.blue)
+                        .fill(.steps)
                         .frame(height: 20)
-                        .frame(width: width * 0.7 * 0.7)
+                        .frame(width: width * 0.7 * viewModel.todayPercent)
                 }
                 
                 Circle()
-                    .frame(height: height * 0.08)
+                    .frame(height: height * 0.05)
             }
             
             
@@ -95,7 +95,7 @@ struct StepsDetailView: View {
                 }
                 
             }
-            .frame(height: height * 0.08)
+            .frame(height: height * 0.04)
             
         }
         .padding()
@@ -111,7 +111,7 @@ struct StepsDetailView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Stpes Average")
                     .appFont(.listTitleBold20)
-                Text("이번주 하루 평균 걸음 수는 7,139 걸음입니다")
+                Text("이번주 하루 평균 걸음 수는 \(viewModel.averageStepsValue) 걸음입니다")
                     .appFont(.emphasisSemiBold16)
                 Divider()
                 
@@ -137,7 +137,7 @@ struct StepsDetailView: View {
                             .frame(maxWidth: .infinity)
                             .frame(maxHeight: 8)
                         HStack {
-                            Text("7,104")
+                            Text("\(viewModel.averageStepsValue)")
                                 .appFont(.titleBold24)
                             Text("Steps")
                                 .appFont(.emphasisSemiBold16)
@@ -145,7 +145,7 @@ struct StepsDetailView: View {
                         }
                     }
                     .padding(.horizontal)
-                    .offset(y: -barHeight * 0.5) // 평균이 차지하는 퍼센트
+                    .offset(y: -barHeight * viewModel.averageStepsPercent) // 평균이 차지하는 퍼센트
                 }
             }
             
