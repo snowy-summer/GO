@@ -10,8 +10,8 @@ import Foundation
 protocol URLSessionProtocol {
     
     func getData(from router: RouterProtocol) async throws -> (Data, URLResponse)
-    func webSocket(from router: RouterProtocol) throws -> URLSessionWebSocketTask
-    
+    func getDataPublisher(from router: RouterProtocol) -> AnyPublisher<(Data, URLResponse), URLError>
+    }
 }
 
 protocol URLSessionDataTaskProtocol {

@@ -111,7 +111,7 @@ extension BodyInformationRouter: RouterProtocol {
         }
     }
     
-    var responseType: (any Decodable.Type)? {
+    var responseType: Decodable.Type? {
         switch self {
         case .postRecord:
             return BodyInformationDTO.self
