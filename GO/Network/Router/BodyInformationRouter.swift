@@ -9,9 +9,9 @@ import Foundation
 
 enum BodyInformationRouter {
     
-    case postRecord
+    case postRecord(body: BodyInfoRequestBody)
     case getUserRecord(UUID)
-    case putUserRecord(UUID)
+    case putUserRecord(UUID, body: BodyInfoRequestBody)
     case deleteUserRecord(UUID)
     case getUserRangeRecord(UUID, String, String)
     case getUserdayRecord(UUID, String)
@@ -29,21 +29,33 @@ extension BodyInformationRouter: RouterProtocol {
         switch self {
         case .postRecord:
             return "/bodyInformation"
-        case .getUserRecord(let id):
+        case .getUserRecord:
             return "/bodyInformation/user"
-        case .putUserRecord(let uUID):
+        case .putUserRecord:
             return "/bodyInformation/update"
-        case .deleteUserRecord(let uUID):
+        case .deleteUserRecord:
             return "/bodyInformation/delete"
-        case .getUserRangeRecord(let uUID, let string, let string2):
+        case .getUserRangeRecord:
             return "/bodyInformation/range"
-        case .getUserdayRecord(let uUID, let string):
+        case .getUserdayRecord:
             return "/bodyInformation/date"
         }
     }
     
+    var encodableBody: Encodable? {
+        switch self {
+        case .postRecord(let body):
+            return body
+        case .putUserRecord(_, let body):
+            return body
+        default:
+            return nil
+        }
+    }
+
     var body: Data? {
-        <#code#>
+        guard let encodable = encodableBody else { return nil }
+        return try? JSONEncoder().encode(encodable)
     }
     
     var query: [URLQueryItem] {
@@ -52,7 +64,7 @@ extension BodyInformationRouter: RouterProtocol {
             return []
         case .getUserRecord(let userID):
             return GetBodyInfoQuery(userID: userID).asQueryItems()
-        case .putUserRecord(let infoID):
+        case .putUserRecord(let infoID, _):
             return PutBodyInfoQuery(infoID: infoID).asQueryItems()
         case .deleteUserRecord(let infoID):
             return DeleteBodyInfoQuery(infoID: infoID).asQueryItems()
@@ -100,7 +112,20 @@ extension BodyInformationRouter: RouterProtocol {
     }
     
     var responseType: (any Decodable.Type)? {
-        <#code#>
+        switch self {
+        case .postRecord:
+            return BodyInformationDTO.self
+        case .getUserRecord:
+            return [BodyInformationDTO].self
+        case .putUserRecord:
+            return BodyInformationDTO.self
+        case .deleteUserRecord:
+            return nil
+        case .getUserRangeRecord:
+            return [BodyInformationDTO].self
+        case .getUserdayRecord:
+            return [BodyInformationDTO].self
+        }
     }
     
     
