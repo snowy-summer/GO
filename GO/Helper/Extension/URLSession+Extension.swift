@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 extension URLSession: URLSessionProtocol {
     
@@ -15,6 +16,22 @@ extension URLSession: URLSessionProtocol {
             .setRouter(router)
             .build()
         return try await data(for: request)
+    }
+    
+    func getDataPublisher(from router: RouterProtocol) -> AnyPublisher<(Data, URLResponse), URLError> {
+        do {
+            let request = try RequestBuilder()
+                .setRouter(router)
+                .build()
+            
+            return self.dataTaskPublisher(for: request)
+                .map { ($0.data, $0.response) }
+                .eraseToAnyPublisher()
+            
+        } catch {
+            return Fail(error: URLError(.badURL))
+                .eraseToAnyPublisher()
+        }
     }
 }
 
