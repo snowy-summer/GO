@@ -20,7 +20,7 @@ struct InformationChartData: Identifiable, HasTodayValue {
     let id = UUID()
     let text: String
     let rawValue: Int
-    let percent: CGFloat
+    let percent: Double
     let isToday: Bool
     var distance: Double = 0
     
