@@ -35,6 +35,14 @@ struct WeightDetailView: View {
                 }
             }
             .padding(.horizontal, 20)
+            .sheet(item: $viewModel.modalType) { type in
+                switch type {
+                case .add:
+                    BodyInformationAddView()
+                case .edit:
+                    BodyInformationAddView()
+                }
+            }
         }
     }
     
@@ -87,23 +95,31 @@ struct WeightDetailView: View {
                             )
                             
                             VStack {
-                                Text("Add Record")
-                                    .appFont(.primaryButtonSemiBold16)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(maxHeight: .infinity)
-                                    .padding()
-                                    .padding(.horizontal)
-                                    .background(.gray.opacity(0.4))
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                Button {
+                                    viewModel.action(.showAddView)
+                                } label: {
+                                    Text("Add Record")
+                                        .appFont(.primaryButtonSemiBold16)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(maxHeight: .infinity)
+                                        .padding()
+                                        .padding(.horizontal)
+                                        .background(.gray.opacity(0.4))
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                }
                                 
-                                Text("Edit Record")
-                                    .appFont(.primaryButtonSemiBold16)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(maxHeight: .infinity)
-                                    .padding()
-                                    .padding(.horizontal)
-                                    .background(.gray.opacity(0.4))
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                Button {
+                                    viewModel.action(.showEditView)
+                                } label: {
+                                    Text("Edit Record")
+                                        .appFont(.primaryButtonSemiBold16)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(maxHeight: .infinity)
+                                        .padding()
+                                        .padding(.horizontal)
+                                        .background(.gray.opacity(0.4))
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                }
                             }
                             .frame(height: width * 0.15)
                             

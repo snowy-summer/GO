@@ -21,6 +21,7 @@ protocol WeightDetailViewModelProtocol: ViewModelAble {
     var recentBodyFatState: ValueState { get }
     
     var isExpanded: Bool { get }
+    var modalType: ModalType? { get }
 }
 
 final class WeightDetailViewModel: WeightDetailViewModelProtocol {
@@ -38,11 +39,14 @@ final class WeightDetailViewModel: WeightDetailViewModelProtocol {
     var recentBodyFatState: ValueState = .normal
     
     @Published var isExpanded: Bool = false
+    @Published var modalType: ModalType?
     
     private let weightDetailUseCase: WeightDetailUseCaseProtocol
     
     enum Intent {
         case fetchData
+        case showAddView
+        case showEditView
     }
     
     init(weightDetailUseCase: WeightDetailUseCaseProtocol = WeightDetailUseCase()) {
@@ -68,8 +72,12 @@ final class WeightDetailViewModel: WeightDetailViewModelProtocol {
             
             day = lastData.date
            
+        case .showAddView:
+            modalType = .add
+            
+        case .showEditView:
+            modalType = .edit
         }
     }
     
 }
-
