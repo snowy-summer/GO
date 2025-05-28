@@ -49,6 +49,9 @@ final class StepsDetailViewModel: StepsDetailViewModelProtocol {
                     await MainActor.run {
                         stepsChartDataList = stepsData
                         todaySteps = todayData?.rawValue ?? 0
+                        // 당일 걸음수가 목표 걸음수를 넘는다면 리워드 지급
+                        // 리워드가 지급이 되어있는지 확인, 지급이 안되어 있다면 지급
+                        
                         todayDistance = todayData?.distance ?? 0.0
                         todayPercent = todayData?.percent ?? 0.0
                         duration = stepsChartUseCase.getDateRange()
@@ -82,6 +85,7 @@ extension StepsDetailViewModel {
     
     private func averageSteps() {
         averageStepsValue = stepsChartDataList.map { $0.rawValue }.reduce(0, +) / stepsChartDataList.count
-        averageStepsPercent = Double(averageStepsValue) / Double(UserDefaultsManager.shared.stepsGoal)
+        let maxSteps = stepsChartDataList.map { $0.rawValue }.max() ?? 0
+        averageStepsPercent = Double(averageStepsValue) / Double(maxSteps)
     }
 }

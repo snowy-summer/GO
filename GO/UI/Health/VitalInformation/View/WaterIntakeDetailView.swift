@@ -145,7 +145,7 @@ struct WaterIntakeDetailView: View {
                         Text("Average")
                         RoundedRectangle(cornerRadius: 20)
                             .frame(maxWidth: .infinity)
-                            .frame(maxHeight: 8)
+                            .frame(maxHeight: 4)
                         HStack {
                             Text("1.2")
                                 .appFont(.titleBold24)

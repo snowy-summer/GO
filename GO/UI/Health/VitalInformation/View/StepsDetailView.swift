@@ -135,7 +135,7 @@ struct StepsDetailView: View {
                         Text("Average")
                         RoundedRectangle(cornerRadius: 20)
                             .frame(maxWidth: .infinity)
-                            .frame(maxHeight: 8)
+                            .frame(maxHeight: 4)
                         HStack {
                             Text("\(viewModel.averageStepsValue)")
                                 .appFont(.titleBold24)
